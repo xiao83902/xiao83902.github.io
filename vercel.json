@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/loan/:path*",
-      "destination": "https://loan-app-six.vercel.app/:path*"
+      "destination": "https://loan-three-vert.vercel.app//:path*"
     }
   ]
 }
