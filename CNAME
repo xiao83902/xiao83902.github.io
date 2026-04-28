@@ -1,1 +1,8 @@
-0902.one
+{
+  "rewrites": [
+    {
+      "source": "/loan/:path*",
+      "destination": "https://loan-app-six.vercel.app/:path*"
+    }
+  ]
+}
