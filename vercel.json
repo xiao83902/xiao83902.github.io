@@ -6,6 +6,10 @@
       "destination": "https://loan-three-vert.vercel.app/"
     },
     {
+      "source": "/loan/",
+      "destination": "https://loan-three-vert.vercel.app/"
+    },
+    {
       "source": "/loan/:path*",
       "destination": "https://loan-three-vert.vercel.app/:path*"
     }
