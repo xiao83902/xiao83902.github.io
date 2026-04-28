@@ -12,6 +12,18 @@
     {
       "source": "/loan/:path*",
       "destination": "https://loan-three-vert.vercel.app/:path*"
+    },
+    {
+      "source": "/bankcode",
+      "destination": "https://bankcode-zeta.vercel.app/"
+    },
+    {
+      "source": "/bankcode/",
+      "destination": "https://bankcode-zeta.vercel.app/"
+    },
+    {
+      "source": "/bankcode/:path*",
+      "destination": "https://bankcode-zeta.vercel.app/:path*"
     }
   ]
 }
