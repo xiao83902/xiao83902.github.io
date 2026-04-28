@@ -8,15 +8,20 @@
   <style>
     :root {
       color-scheme: light;
-      --bg: #f7f8fb;
-      --panel: #ffffff;
-      --text: #18202f;
+      --bg: #f4f6f8;
+      --surface: #ffffff;
+      --surface-2: #f9fbfc;
+      --text: #16202a;
       --muted: #637083;
-      --line: #dfe5ee;
+      --line: #dce3ea;
       --accent: #0f766e;
       --accent-dark: #115e59;
-      --accent-soft: #e6f5f3;
-      --shadow: 0 18px 45px rgba(24, 32, 47, 0.08);
+      --accent-soft: #e7f5f2;
+      --gold: #b7791f;
+      --gold-soft: #fff4dd;
+      --ink: #26313d;
+      --shadow: 0 22px 70px rgba(22, 32, 42, 0.11);
+      --soft-shadow: 0 14px 36px rgba(22, 32, 42, 0.08);
     }
 
     * { box-sizing: border-box; }
@@ -24,195 +29,475 @@
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(115deg, rgba(15, 118, 110, 0.10), transparent 34%),
+        linear-gradient(245deg, rgba(183, 121, 31, 0.10), transparent 30%),
+        var(--bg);
       color: var(--text);
     }
 
-    main {
+    a { color: inherit; }
+
+    .page {
       min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 32px 18px;
+      padding: 28px;
     }
 
     .shell {
-      width: min(920px, 100%);
+      width: min(1120px, 100%);
+      margin: 0 auto;
       display: grid;
       gap: 22px;
     }
 
-    .hero {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      box-shadow: var(--shadow);
-      padding: clamp(28px, 6vw, 56px);
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 34px;
+    .topbar {
+      min-height: 60px;
+      display: flex;
       align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 4px;
     }
 
-    .brand {
-      margin: 0 0 12px;
-      font-size: clamp(36px, 7vw, 72px);
-      line-height: 1;
-      font-weight: 800;
+    .mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      font-weight: 850;
+      font-size: 20px;
       letter-spacing: 0;
     }
 
-    .intro {
+    .mark-symbol {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--accent), #1f8a70);
+      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.22);
+      font-size: 15px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(99, 112, 131, 0.22);
+      border-radius: 8px;
+      padding: 0 13px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.72);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero {
+      min-height: 540px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .intro-card,
+    .command-card,
+    .tool-card,
+    .metric {
+      border: 1px solid rgba(220, 227, 234, 0.95);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .intro-card {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(34px, 6vw, 62px);
+      display: grid;
+      align-content: space-between;
+      gap: 34px;
+    }
+
+    .intro-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(15, 118, 110, 0.13), transparent 44%),
+        repeating-linear-gradient(90deg, rgba(22, 32, 42, 0.055) 0 1px, transparent 1px 72px),
+        repeating-linear-gradient(0deg, rgba(22, 32, 42, 0.045) 0 1px, transparent 1px 72px);
+      pointer-events: none;
+    }
+
+    .intro-content,
+    .hero-footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--accent-dark);
+      font-size: 13px;
+      font-weight: 850;
+      letter-spacing: 0;
+    }
+
+    h1 {
       margin: 0;
-      max-width: 560px;
+      max-width: 680px;
+      font-size: clamp(46px, 7vw, 86px);
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin: 22px 0 0;
+      max-width: 600px;
       color: var(--muted);
       font-size: 18px;
-      line-height: 1.75;
+      line-height: 1.8;
     }
 
     .actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 28px;
+      margin-top: 30px;
     }
 
     .button {
-      min-height: 46px;
+      min-height: 48px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 9px;
       border-radius: 8px;
       border: 1px solid transparent;
       padding: 0 18px;
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 15px;
+      font-weight: 850;
       text-decoration: none;
       white-space: nowrap;
-      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
     }
 
-    .button:hover { transform: translateY(-1px); }
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--soft-shadow);
+    }
 
-    .primary {
+    .button.primary {
       color: #ffffff;
       background: var(--accent);
     }
 
-    .primary:hover { background: var(--accent-dark); }
-
-    .secondary {
+    .button.secondary {
       color: var(--accent-dark);
       background: var(--accent-soft);
       border-color: #b8dfda;
     }
 
-    .panel {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fbfcfe;
-      padding: 22px;
-    }
-
-    .panel h2 {
-      margin: 0 0 12px;
-      font-size: 18px;
-    }
-
-    .tool-list {
-      display: grid;
-      gap: 10px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .tool-list a {
-      display: block;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 14px 15px;
-      color: var(--text);
-      text-decoration: none;
-      background: #ffffff;
-      font-weight: 800;
-    }
-
-    .tool-list span {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 1.5;
-    }
-
-    .status {
+    .hero-footer {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
     }
 
-    .item {
-      background: var(--panel);
+    .metric {
+      box-shadow: none;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 19px;
+      letter-spacing: 0;
+    }
+
+    .side {
+      display: grid;
+      gap: 18px;
+    }
+
+    .command-card {
+      padding: 22px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .command-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .command-head h2,
+    .section-title h2 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+
+    .live {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #166534;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .live::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.14);
+    }
+
+    .tool-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .tool-card {
+      padding: 20px;
+      display: grid;
+      gap: 16px;
+      text-decoration: none;
+      box-shadow: var(--soft-shadow);
+      transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(15, 118, 110, 0.45);
+      box-shadow: 0 22px 48px rgba(22, 32, 42, 0.12);
+    }
+
+    .tool-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .tool-icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-weight: 900;
+      font-size: 18px;
+    }
+
+    .tool-card:nth-child(2) .tool-icon {
+      background: var(--gold-soft);
+      color: var(--gold);
+    }
+
+    .tool-card h3 {
+      margin: 0;
+      font-size: 21px;
+      letter-spacing: 0;
+    }
+
+    .tool-card p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .tool-path {
+      align-self: start;
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 16px;
+      padding: 6px 9px;
+      color: var(--muted);
+      background: var(--surface-2);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 12px;
     }
 
-    .label {
-      margin: 0 0 6px;
+    .tool-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
       color: var(--muted);
       font-size: 13px;
+      font-weight: 750;
     }
 
-    .value {
-      margin: 0;
-      font-weight: 800;
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-top: 10px;
     }
 
-    @media (max-width: 720px) {
-      main { place-items: start center; }
-      .hero { grid-template-columns: 1fr; padding: 26px; }
-      .status { grid-template-columns: 1fr; }
+    .section-title p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .detail-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.78);
+      padding: 18px;
+    }
+
+    .detail-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .detail-card strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 18px;
+    }
+
+    @media (max-width: 920px) {
+      .page { padding: 20px; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .side { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .nav { width: 100%; justify-content: stretch; }
+      .nav a { flex: 1; justify-content: center; }
+      .intro-card { padding: 28px; }
+      .hero-footer,
+      .details { grid-template-columns: 1fr; }
+      .actions { display: grid; }
       .button { width: 100%; }
+      .tool-top { display: grid; }
+      .tool-path { justify-self: start; }
     }
   </style>
 </head>
 <body>
-  <main>
+  <main class="page">
     <div class="shell">
+      <header class="topbar" aria-label="網站導覽">
+        <a class="mark" href="/" aria-label="0902.one 首頁">
+          <span class="mark-symbol">09</span>
+          <span>0902.one</span>
+        </a>
+        <nav class="nav" aria-label="工具捷徑">
+          <a href="/loan">貸款工具</a>
+          <a href="/bankcode">銀行代碼查詢</a>
+        </nav>
+      </header>
+
       <section class="hero" aria-labelledby="site-title">
-        <div>
-          <h1 class="brand" id="site-title">0902.one</h1>
-          <p class="intro">這裡是工具入口頁。常用服務會集中放在這裡，方便快速開啟與管理。</p>
-          <div class="actions">
-            <a class="button primary" href="/loan">開啟貸款工具</a>
-            <a class="button secondary" href="/bankcode">開啟銀行代碼查詢</a>
+        <div class="intro-card">
+          <div class="intro-content">
+            <p class="eyebrow">TOOLS DASHBOARD</p>
+            <h1 id="site-title">你的金融工具入口</h1>
+            <p class="lead">把常用查詢與計算服務集中在同一個乾淨入口，從首頁快速進入貸款計算、金融機構分行代碼查詢，以及後續新增的工具。</p>
+            <div class="actions">
+              <a class="button primary" href="/loan">開啟貸款工具</a>
+              <a class="button secondary" href="/bankcode">查詢銀行代碼</a>
+            </div>
+          </div>
+          <div class="hero-footer" aria-label="網站摘要">
+            <div class="metric"><span>主網域</span><strong>0902.one</strong></div>
+            <div class="metric"><span>工具數</span><strong>2</strong></div>
+            <div class="metric"><span>狀態</span><strong>已上線</strong></div>
           </div>
         </div>
-        <aside class="panel" aria-label="目前可用工具">
-          <h2>目前可用</h2>
-          <ul class="tool-list">
-            <li><a href="/loan">貸款工具<span>銀行貸款自動計算系統</span></a></li>
-            <li><a href="/bankcode">銀行代碼查詢<span>臺灣金融機構分行代碼查詢</span></a></li>
-          </ul>
+
+        <aside class="side" aria-label="工具清單">
+          <div class="command-card">
+            <div class="command-head">
+              <h2>服務中心</h2>
+              <span class="live">Online</span>
+            </div>
+            <div class="tool-grid">
+              <a class="tool-card" href="/loan">
+                <div class="tool-top">
+                  <div>
+                    <div class="tool-icon">貸</div>
+                    <h3>貸款工具</h3>
+                    <p>銀行貸款自動計算系統，快速整理本金、利率與還款資訊。</p>
+                  </div>
+                  <span class="tool-path">/loan</span>
+                </div>
+                <div class="tool-meta"><span>Loan Calculator</span><span>Open</span></div>
+              </a>
+
+              <a class="tool-card" href="/bankcode">
+                <div class="tool-top">
+                  <div>
+                    <div class="tool-icon">行</div>
+                    <h3>銀行代碼查詢</h3>
+                    <p>臺灣金融機構分行代碼查詢，適合快速查找銀行與分行資料。</p>
+                  </div>
+                  <span class="tool-path">/bankcode</span>
+                </div>
+                <div class="tool-meta"><span>Bank Code Lookup</span><span>Open</span></div>
+              </a>
+            </div>
+          </div>
         </aside>
       </section>
 
-      <section class="status" aria-label="網站狀態">
-        <div class="item">
-          <p class="label">主網域</p>
-          <p class="value">0902.one</p>
+      <section class="section-title" aria-label="部署資訊">
+        <div>
+          <h2>穩定連線</h2>
+          <p>首頁與工具路徑皆由 Vercel 提供，裸網域會導向 www 網域。</p>
         </div>
-        <div class="item">
-          <p class="label">工具路徑</p>
-          <p class="value">/loan /bankcode</p>
-        </div>
-        <div class="item">
-          <p class="label">狀態</p>
-          <p class="value">已啟用</p>
-        </div>
+      </section>
+
+      <section class="details" aria-label="連線狀態">
+        <div class="detail-card"><span>首頁</span><strong>www.0902.one</strong></div>
+        <div class="detail-card"><span>貸款工具</span><strong>/loan</strong></div>
+        <div class="detail-card"><span>銀行代碼</span><strong>/bankcode</strong></div>
       </section>
     </div>
   </main>
