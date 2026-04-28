@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/loan/:path*",
+      "source": "https://www.0902.one/loan*",
       "destination": "https://loan-three-vert.vercel.app//:path*"
     }
   ]
