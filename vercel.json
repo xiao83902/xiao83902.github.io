@@ -1,8 +1,13 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
+      "source": "/loan",
+      "destination": "https://loan-three-vert.vercel.app/"
+    },
+    {
       "source": "/loan/:path*",
-      "destination": "https://loan-app-six.vercel.app/:path*"
+      "destination": "https://loan-three-vert.vercel.app/:path*"
     }
   ]
 }
