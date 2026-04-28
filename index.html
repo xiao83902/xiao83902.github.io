@@ -18,6 +18,7 @@
       --accent-soft: #e7f5f2;
       --gold: #b7791f;
       --gold-soft: #fff4dd;
+      --danger: #b42318;
       --shadow: 0 22px 70px rgba(22, 32, 42, 0.11);
       --soft-shadow: 0 14px 36px rgba(22, 32, 42, 0.08);
     }
@@ -37,9 +38,108 @@
 
     a { color: inherit; }
 
+    .auth,
     .page {
       min-height: 100vh;
-      padding: 28px;
+      padding: clamp(18px, 4vw, 28px);
+    }
+
+    .auth {
+      display: grid;
+      place-items: center;
+    }
+
+    .auth-card {
+      width: min(460px, 100%);
+      border: 1px solid rgba(220, 227, 234, 0.95);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      padding: clamp(26px, 7vw, 42px);
+    }
+
+    .auth-kicker {
+      margin: 0 0 12px;
+      color: var(--accent-dark);
+      font-size: 13px;
+      font-weight: 850;
+      letter-spacing: 0;
+    }
+
+    .auth-card h1 {
+      margin: 0;
+      font-size: clamp(32px, 9vw, 46px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .auth-card p {
+      margin: 16px 0 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .auth-form {
+      display: grid;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .auth-form label {
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .auth-form input {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 14px;
+      color: var(--text);
+      background: #ffffff;
+      font: inherit;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .auth-form input:focus {
+      border-color: rgba(15, 118, 110, 0.62);
+      box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.12);
+    }
+
+    .auth-form button {
+      min-height: 48px;
+      border: 0;
+      border-radius: 8px;
+      color: #ffffff;
+      background: var(--accent);
+      font: inherit;
+      font-size: 15px;
+      font-weight: 850;
+      cursor: pointer;
+      transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+    }
+
+    .auth-form button:hover {
+      background: var(--accent-dark);
+      box-shadow: var(--soft-shadow);
+      transform: translateY(-1px);
+    }
+
+    .auth-error {
+      min-height: 22px;
+      margin: 2px 0 0;
+      color: var(--danger);
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .page[hidden],
+    .auth[hidden] {
+      display: none;
     }
 
     .shell {
@@ -53,31 +153,9 @@
       min-height: 60px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       gap: 18px;
       padding: 0 4px;
-    }
-
-    .mark {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      font-weight: 850;
-      font-size: 20px;
-      letter-spacing: 0;
-    }
-
-    .mark-symbol {
-      width: 38px;
-      height: 38px;
-      display: grid;
-      place-items: center;
-      border-radius: 8px;
-      color: #ffffff;
-      background: linear-gradient(135deg, var(--accent), #1f8a70);
-      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.22);
-      font-size: 15px;
     }
 
     .status-pill {
@@ -127,7 +205,7 @@
     .intro-card {
       position: relative;
       overflow: hidden;
-      padding: clamp(34px, 6vw, 62px);
+      padding: clamp(30px, 6vw, 62px);
       display: grid;
       align-content: space-between;
       gap: 34px;
@@ -158,10 +236,10 @@
       letter-spacing: 0;
     }
 
-    h1 {
+    .intro-card h2 {
       margin: 0;
       max-width: 680px;
-      font-size: clamp(46px, 7vw, 86px);
+      font-size: clamp(42px, 7vw, 86px);
       line-height: 0.98;
       letter-spacing: 0;
     }
@@ -176,7 +254,7 @@
 
     .hero-footer {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
     }
 
@@ -184,6 +262,7 @@
       box-shadow: none;
       padding: 16px;
       background: rgba(255, 255, 255, 0.72);
+      min-width: 0;
     }
 
     .metric span {
@@ -198,6 +277,7 @@
       margin-top: 6px;
       font-size: 19px;
       letter-spacing: 0;
+      overflow-wrap: anywhere;
     }
 
     .side {
@@ -253,6 +333,11 @@
       box-shadow: 0 22px 48px rgba(22, 32, 42, 0.12);
     }
 
+    .tool-card:focus-visible {
+      outline: 3px solid rgba(15, 118, 110, 0.28);
+      outline-offset: 3px;
+    }
+
     .tool-top {
       display: flex;
       align-items: flex-start;
@@ -298,6 +383,7 @@
       background: var(--surface-2);
       font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
       font-size: 12px;
+      white-space: nowrap;
     }
 
     .tool-meta {
@@ -312,29 +398,96 @@
     }
 
     @media (max-width: 920px) {
-      .page { padding: 20px; }
-      .hero { grid-template-columns: 1fr; min-height: auto; }
-      .side { grid-template-columns: 1fr; }
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .intro-card {
+        min-height: 430px;
+      }
     }
 
     @media (max-width: 640px) {
-      .topbar { align-items: flex-start; flex-direction: column; }
-      .status-pill { width: 100%; justify-content: center; }
-      .intro-card { padding: 28px; }
-      .hero-footer { grid-template-columns: 1fr; }
-      .tool-top { display: grid; }
-      .tool-path { justify-self: start; }
+      .page,
+      .auth {
+        padding: 16px;
+      }
+
+      .topbar {
+        min-height: auto;
+        justify-content: stretch;
+      }
+
+      .status-pill {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .intro-card {
+        min-height: auto;
+        padding: 26px;
+      }
+
+      .intro-card h2 {
+        font-size: clamp(36px, 13vw, 54px);
+      }
+
+      .lead {
+        font-size: 16px;
+      }
+
+      .hero-footer {
+        grid-template-columns: 1fr;
+      }
+
+      .command-card {
+        padding: 18px;
+      }
+
+      .command-head,
+      .tool-top,
+      .tool-meta {
+        display: grid;
+      }
+
+      .tool-path {
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .auth-card,
+      .intro-card,
+      .command-card,
+      .tool-card {
+        padding: 18px;
+      }
+
+      .intro-card h2 {
+        font-size: 34px;
+      }
     }
   </style>
 </head>
 <body>
-  <main class="page">
+  <section class="auth" id="auth" aria-labelledby="auth-title">
+    <div class="auth-card">
+      <p class="auth-kicker">PRIVATE ACCESS</p>
+      <h1 id="auth-title">輸入密碼</h1>
+      <p>此入口頁需要驗證後才能查看服務中心。</p>
+      <form class="auth-form" id="auth-form">
+        <label for="password">密碼</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" inputmode="text" required>
+        <button type="submit">進入 0902.one</button>
+        <p class="auth-error" id="auth-error" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <main class="page" id="app" hidden>
     <div class="shell">
       <header class="topbar" aria-label="網站狀態">
-        <div class="mark" aria-label="0902.one">
-          <span class="mark-symbol">09</span>
-          <span>0902.one</span>
-        </div>
         <div class="status-pill">Online</div>
       </header>
 
@@ -342,7 +495,7 @@
         <div class="intro-card">
           <div class="intro-content">
             <p class="eyebrow">TOOLS DASHBOARD</p>
-            <h1 id="site-title">你的金融工具入口</h1>
+            <h2 id="site-title">你的金融工具入口</h2>
             <p class="lead">把常用查詢與計算服務集中在同一個乾淨入口。每個服務只保留一個明確入口，降低選擇成本，也讓操作更一致。</p>
           </div>
           <div class="hero-footer" aria-label="網站摘要">
@@ -388,5 +541,40 @@
       </section>
     </div>
   </main>
+
+  <script>
+    const PASSWORD = '0902';
+    const STORAGE_KEY = '0902-one-authenticated';
+    const auth = document.getElementById('auth');
+    const app = document.getElementById('app');
+    const form = document.getElementById('auth-form');
+    const password = document.getElementById('password');
+    const error = document.getElementById('auth-error');
+
+    function unlock() {
+      auth.hidden = true;
+      app.hidden = false;
+    }
+
+    if (sessionStorage.getItem(STORAGE_KEY) === 'true') {
+      unlock();
+    } else {
+      password.focus();
+    }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      if (password.value === PASSWORD) {
+        sessionStorage.setItem(STORAGE_KEY, 'true');
+        error.textContent = '';
+        unlock();
+        return;
+      }
+
+      error.textContent = '密碼錯誤，請重新輸入。';
+      password.value = '';
+      password.focus();
+    });
+  </script>
 </body>
 </html>
