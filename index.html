@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>0902.one</title>
+  <meta name="description" content="0902.one 工具入口">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --text: #18202f;
+      --muted: #637083;
+      --line: #dfe5ee;
+      --accent: #0f766e;
+      --accent-dark: #115e59;
+      --accent-soft: #e6f5f3;
+      --shadow: 0 18px 45px rgba(24, 32, 47, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    main {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px 18px;
+    }
+
+    .shell {
+      width: min(920px, 100%);
+      display: grid;
+      gap: 22px;
+    }
+
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: clamp(28px, 6vw, 56px);
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .brand {
+      margin: 0 0 12px;
+      font-size: clamp(36px, 7vw, 72px);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      margin: 0;
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      padding: 0 18px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .primary {
+      color: #ffffff;
+      background: var(--accent);
+    }
+
+    .primary:hover {
+      background: var(--accent-dark);
+    }
+
+    .secondary {
+      color: var(--accent-dark);
+      background: var(--accent-soft);
+      border-color: #b8dfda;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfe;
+      padding: 22px;
+    }
+
+    .panel h2 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    .panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .status {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .item {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .label {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .value {
+      margin: 0;
+      font-weight: 800;
+    }
+
+    @media (max-width: 720px) {
+      main {
+        place-items: start center;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 26px;
+      }
+
+      .status {
+        grid-template-columns: 1fr;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="shell">
+      <section class="hero" aria-labelledby="site-title">
+        <div>
+          <h1 class="brand" id="site-title">0902.one</h1>
+          <p class="intro">這裡是工具入口頁。常用服務會集中放在這裡，方便快速開啟與管理。</p>
+          <div class="actions">
+            <a class="button primary" href="/loan">開啟貸款工具</a>
+            <a class="button secondary" href="https://loan-three-vert.vercel.app/">備用連結</a>
+          </div>
+        </div>
+        <aside class="panel" aria-label="目前可用工具">
+          <h2>目前可用</h2>
+          <p>銀行貸款自動計算系統已上線，可由 /loan 進入。</p>
+        </aside>
+      </section>
+
+      <section class="status" aria-label="網站狀態">
+        <div class="item">
+          <p class="label">主網域</p>
+          <p class="value">0902.one</p>
+        </div>
+        <div class="item">
+          <p class="label">工具路徑</p>
+          <p class="value">/loan</p>
+        </div>
+        <div class="item">
+          <p class="label">狀態</p>
+          <p class="value">已啟用</p>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
