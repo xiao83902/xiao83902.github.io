@@ -1,5 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/monthly-fee-manager",
+      "destination": "/monthly-fee-manager/",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/loan",
@@ -24,6 +31,14 @@
     {
       "source": "/bankcode/:path*",
       "destination": "https://bankcode-zeta.vercel.app/:path*"
+    },
+    {
+      "source": "/monthly-fee-manager/",
+      "destination": "https://monthly-fee-manager.vercel.app/"
+    },
+    {
+      "source": "/monthly-fee-manager/:path*",
+      "destination": "https://monthly-fee-manager.vercel.app/:path*"
     }
   ]
 }
