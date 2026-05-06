@@ -14,7 +14,12 @@
   "redirects": [
     {
       "source": "/hotel-parking-fee",
-      "destination": "/hotel-parking-fee/",
+      "destination": "/hotel-parking-fee/index.html?v=cloud-sync-20260507",
+      "permanent": false
+    },
+    {
+      "source": "/hotel-parking-fee/",
+      "destination": "/hotel-parking-fee/index.html?v=cloud-sync-20260507",
       "permanent": false
     },
     {
