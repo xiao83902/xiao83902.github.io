@@ -2,6 +2,16 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
+      "source": "/loan",
+      "destination": "/bankloan/",
+      "permanent": false
+    },
+    {
+      "source": "/loan/",
+      "destination": "/bankloan/",
+      "permanent": false
+    },
+    {
       "source": "/monthly-fee-manager",
       "destination": "/monthly-fee-manager/",
       "permanent": false
@@ -9,15 +19,15 @@
   ],
   "rewrites": [
     {
-      "source": "/loan",
+      "source": "/bankloan",
       "destination": "https://bank-loan-auto-calculation-system-pxr2m3v3na-de.a.run.app/"
     },
     {
-      "source": "/loan/",
+      "source": "/bankloan/",
       "destination": "https://bank-loan-auto-calculation-system-pxr2m3v3na-de.a.run.app/"
     },
     {
-      "source": "/loan/:path*",
+      "source": "/bankloan/:path*",
       "destination": "https://bank-loan-auto-calculation-system-pxr2m3v3na-de.a.run.app/:path*"
     },
     {
