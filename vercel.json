@@ -1,5 +1,16 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "headers": [
+    {
+      "source": "/hotel-parking-fee/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, max-age=0"
+        }
+      ]
+    }
+  ],
   "redirects": [
     {
       "source": "/hotel-parking-fee",
