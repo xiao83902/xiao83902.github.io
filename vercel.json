@@ -2,16 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
-      "source": "/loan",
-      "destination": "/bankloan/",
-      "permanent": false
-    },
-    {
-      "source": "/loan/",
-      "destination": "/bankloan/",
-      "permanent": false
-    },
-    {
       "source": "/monthly-fee-manager",
       "destination": "/monthly-fee-manager/",
       "permanent": false
