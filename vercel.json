@@ -2,6 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
+      "source": "/hotel-parking-fee",
+      "destination": "/hotel-parking-fee/",
+      "permanent": false
+    },
+    {
       "source": "/monthly-fee-manager",
       "destination": "/monthly-fee-manager/",
       "permanent": false
@@ -39,6 +44,14 @@
     {
       "source": "/monthly-fee-manager/:path*",
       "destination": "https://monthly-fee-manager.vercel.app/:path*"
+    },
+    {
+      "source": "/hotel-parking-fee/",
+      "destination": "https://storage.googleapis.com/hotel-parking-fee-0902-one/index.html"
+    },
+    {
+      "source": "/hotel-parking-fee/:path*",
+      "destination": "https://storage.googleapis.com/hotel-parking-fee-0902-one/:path*"
     }
   ]
 }
