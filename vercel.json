@@ -10,15 +10,15 @@
   "rewrites": [
     {
       "source": "/loan",
-      "destination": "https://loan-three-vert.vercel.app/"
+      "destination": "https://bank-loan-auto-calculation-system-pxr2m3v3na-de.a.run.app/"
     },
     {
       "source": "/loan/",
-      "destination": "https://loan-three-vert.vercel.app/"
+      "destination": "https://bank-loan-auto-calculation-system-pxr2m3v3na-de.a.run.app/"
     },
     {
       "source": "/loan/:path*",
-      "destination": "https://loan-three-vert.vercel.app/:path*"
+      "destination": "https://bank-loan-auto-calculation-system-pxr2m3v3na-de.a.run.app/:path*"
     },
     {
       "source": "/bankcode",
