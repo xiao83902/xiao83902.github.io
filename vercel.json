@@ -13,16 +13,6 @@
   ],
   "redirects": [
     {
-      "source": "/hotel-parking-fee",
-      "destination": "/hotel-parking-fee/index.html?v=cloud-sync-20260507",
-      "permanent": false
-    },
-    {
-      "source": "/hotel-parking-fee/",
-      "destination": "/hotel-parking-fee/index.html?v=cloud-sync-20260507",
-      "permanent": false
-    },
-    {
       "source": "/monthly-fee-manager",
       "destination": "/monthly-fee-manager/",
       "permanent": false
@@ -60,6 +50,10 @@
     {
       "source": "/monthly-fee-manager/:path*",
       "destination": "https://monthly-fee-manager.vercel.app/:path*"
+    },
+    {
+      "source": "/hotel-parking-fee",
+      "destination": "https://storage.googleapis.com/hotel-parking-fee-0902-one/index.html"
     },
     {
       "source": "/hotel-parking-fee/",
