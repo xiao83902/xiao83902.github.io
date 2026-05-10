@@ -16,17 +16,14 @@
       "source": "/monthly-fee-manager",
       "destination": "/monthly-fee-manager/",
       "permanent": false
+    },
+    {
+      "source": "/1Credit",
+      "destination": "/1Credit/",
+      "permanent": false
     }
   ],
   "rewrites": [
-    {
-      "source": "/1Credit",
-      "destination": "https://script.google.com/macros/s/AKfycbxLb_9mzbgjSH2r3Y7ca4nXfbU_VpWQz5HrrxIBVoW_3vkuSB1Mu_jUv50M4DqJRbAurw/exec"
-    },
-    {
-      "source": "/1Credit/",
-      "destination": "https://script.google.com/macros/s/AKfycbxLb_9mzbgjSH2r3Y7ca4nXfbU_VpWQz5HrrxIBVoW_3vkuSB1Mu_jUv50M4DqJRbAurw/exec"
-    },
     {
       "source": "/bankloan",
       "destination": "https://bank-loan-auto-calculation-system-pxr2m3v3na-de.a.run.app/"
