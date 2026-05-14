@@ -1,5 +1,6 @@
 const TARGET_ORIGIN = "http://nas220.i234.me:55721";
 const PUBLIC_BASE = "/pcc";
+const ASSET_VERSION = "20260514-1";
 const PWA_HEAD = `
     <meta name="theme-color" content="#0f766e">
     <meta name="mobile-web-app-capable" content="yes">
@@ -7,12 +8,12 @@ const PWA_HEAD = `
     <meta name="apple-mobile-web-app-title" content="工程標案">
     <link rel="manifest" href="${PUBLIC_BASE}/manifest.webmanifest">
     <link rel="icon" href="${PUBLIC_BASE}/icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="${PUBLIC_BASE}/pcc-overrides.css">`;
+    <link rel="stylesheet" href="${PUBLIC_BASE}/pcc-overrides.css?v=${ASSET_VERSION}">`;
 const PWA_SCRIPT = `
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("${PUBLIC_BASE}/sw.js", { scope: "${PUBLIC_BASE}/" }).catch(() => {});
+          navigator.serviceWorker.register("${PUBLIC_BASE}/sw.js?v=${ASSET_VERSION}", { scope: "${PUBLIC_BASE}/" }).catch(() => {});
         });
       }
     </script>`;

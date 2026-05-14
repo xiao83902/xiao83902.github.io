@@ -1,9 +1,10 @@
-const CACHE_NAME = "pcc-tender-v1";
+const ASSET_VERSION = "20260514-1";
+const CACHE_NAME = `pcc-tender-${ASSET_VERSION}`;
 const APP_SHELL = [
   "/pcc/",
   "/pcc/settings.html",
   "/pcc/styles.css",
-  "/pcc/pcc-overrides.css",
+  `/pcc/pcc-overrides.css?v=${ASSET_VERSION}`,
   "/pcc/app.js",
   "/pcc/settings.js",
   "/pcc/manifest.webmanifest",
