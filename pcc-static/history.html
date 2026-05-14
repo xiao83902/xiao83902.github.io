@@ -11,7 +11,7 @@
     <link rel="manifest" href="/pcc/manifest.webmanifest">
     <link rel="icon" href="/pcc/icon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/pcc/styles.css">
-    <link rel="stylesheet" href="/pcc/pcc-overrides.css?v=20260514-9">
+    <link rel="stylesheet" href="/pcc/pcc-overrides.css?v=20260514-10">
   </head>
   <body class="history-page">
     <main class="shell narrow">
@@ -52,11 +52,11 @@
     </main>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="/pcc/pcc-history.js?v=20260514-9"></script>
+    <script src="/pcc/pcc-history.js?v=20260514-10"></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("/pcc/sw.js?v=20260514-9", { scope: "/pcc/" }).catch(() => {});
+          navigator.serviceWorker.register("/pcc/sw.js?v=20260514-10", { scope: "/pcc/" }).catch(() => {});
         });
       }
     </script>

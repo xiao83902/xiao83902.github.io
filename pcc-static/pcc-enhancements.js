@@ -4,11 +4,13 @@
   const RESULT_ROWS_SELECTOR = "#resultRows";
   const LINK_CELL_SELECTOR = 'td[data-label="連結"]';
   const AGENCY_CELL_SELECTOR = 'td[data-label="機關"]';
+  const BUDGET_CELL_SELECTOR = 'td[data-label="標案金額"]';
   const KEYWORDS_SELECTOR = "#keywords";
   const RESULT_META_SELECTOR = "#resultMeta";
   const ORG_INPUT_SELECTOR = "#orgName";
   const SEARCH_BUTTON_SELECTOR = "#searchButton";
-  const ENHANCEMENT_VERSION = "20260514-9";
+  const ENHANCEMENT_VERSION = "20260514-10";
+  let amountSortApplying = false;
 
   function readHistory() {
     try {
@@ -35,7 +37,7 @@
       agency: textFrom(row, AGENCY_CELL_SELECTOR),
       announceDate: textFrom(row, 'td[data-label="公告日"]'),
       deadline: textFrom(row, 'td[data-label="截止"]'),
-      budget: textFrom(row, 'td[data-label="標案金額"]'),
+      budget: textFrom(row, BUDGET_CELL_SELECTOR),
       tenderMeta: textFrom(row, ".tender-id"),
       viewedAt: new Date().toISOString()
     };
@@ -264,6 +266,93 @@
       .replace(/'/g, "&#39;");
   }
 
+  function parseBudgetAmount(value) {
+    const normalized = String(value || "").replace(/[,\s，]/g, "");
+    if (!/\d/.test(normalized)) return null;
+
+    const amount = Number(normalized.replace(/[^\d.]/g, ""));
+    return Number.isFinite(amount) ? amount : null;
+  }
+
+  function sortableTenderRows() {
+    const resultRows = document.querySelector(RESULT_ROWS_SELECTOR);
+    if (!resultRows) return [];
+
+    return [...resultRows.querySelectorAll("tr")]
+      .filter((row) => row.querySelector(BUDGET_CELL_SELECTOR));
+  }
+
+  function ensureOriginalRowOrder(rows) {
+    rows.forEach((row, index) => {
+      if (!row.dataset.amountSortOrder) row.dataset.amountSortOrder = String(index);
+    });
+  }
+
+  function compareByOriginalOrder(a, b) {
+    return Number(a.dataset.amountSortOrder || 0) - Number(b.dataset.amountSortOrder || 0);
+  }
+
+  function compareRowsByAmount(a, b, direction) {
+    if (direction === "current") return compareByOriginalOrder(a, b);
+
+    const firstAmount = parseBudgetAmount(textFrom(a, BUDGET_CELL_SELECTOR));
+    const secondAmount = parseBudgetAmount(textFrom(b, BUDGET_CELL_SELECTOR));
+    const firstMissing = firstAmount === null;
+    const secondMissing = secondAmount === null;
+
+    if (firstMissing && secondMissing) return compareByOriginalOrder(a, b);
+    if (firstMissing) return 1;
+    if (secondMissing) return -1;
+
+    const diff = direction === "desc"
+      ? secondAmount - firstAmount
+      : firstAmount - secondAmount;
+
+    return diff || compareByOriginalOrder(a, b);
+  }
+
+  function applyAmountSort() {
+    if (amountSortApplying) return;
+
+    const resultRows = document.querySelector(RESULT_ROWS_SELECTOR);
+    const select = document.querySelector(".amount-sort-select");
+    const rows = sortableTenderRows();
+    if (!resultRows || !select || rows.length < 2) return;
+
+    ensureOriginalRowOrder(rows);
+    const direction = select.value;
+    const sortedRows = [...rows].sort((a, b) => compareRowsByAmount(a, b, direction));
+    if (sortedRows.every((row, index) => row === rows[index])) return;
+
+    amountSortApplying = true;
+    try {
+      const fragment = document.createDocumentFragment();
+      sortedRows.forEach((row) => fragment.append(row));
+      resultRows.append(fragment);
+    } finally {
+      amountSortApplying = false;
+    }
+  }
+
+  function enhanceAmountSort() {
+    const toolbar = document.querySelector(".result-toolbar");
+    if (!toolbar || toolbar.querySelector(".amount-sort-control")) return;
+
+    const control = document.createElement("label");
+    control.className = "amount-sort-control";
+    control.innerHTML = `
+      <span>金額排序</span>
+      <select class="amount-sort-select" aria-label="金額排序">
+        <option value="current">依目前排序</option>
+        <option value="desc">金額高到低</option>
+        <option value="asc">金額低到高</option>
+      </select>
+    `;
+
+    control.querySelector("select").addEventListener("change", applyAmountSort);
+    toolbar.append(control);
+  }
+
   function enhanceTenderRows() {
     const rows = document.querySelectorAll(`${RESULT_ROWS_SELECTOR} tr`);
     rows.forEach((row) => {
@@ -331,6 +420,7 @@
     document.documentElement.dataset.pccEnhancements = ENHANCEMENT_VERSION;
     enhanceKeywordInput();
     enhanceResultKeywordSummary();
+    enhanceAmountSort();
 
     const resultRows = document.querySelector(RESULT_ROWS_SELECTOR);
     if (!resultRows) return;
@@ -341,8 +431,13 @@
     document.addEventListener("click", handleTenderActivation, true);
     document.addEventListener("keydown", handleTenderActivation, true);
 
-    enhanceTenderRows();
-    new MutationObserver(enhanceTenderRows).observe(resultRows, {
+    const refreshResults = () => {
+      enhanceTenderRows();
+      applyAmountSort();
+    };
+
+    refreshResults();
+    new MutationObserver(refreshResults).observe(resultRows, {
       childList: true,
       subtree: true
     });
