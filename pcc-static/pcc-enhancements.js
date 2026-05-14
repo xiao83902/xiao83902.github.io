@@ -6,6 +6,7 @@
   const AGENCY_CELL_SELECTOR = 'td[data-label="機關"]';
   const ORG_INPUT_SELECTOR = "#orgName";
   const SEARCH_BUTTON_SELECTOR = "#searchButton";
+  const ENHANCEMENT_VERSION = "20260514-8";
 
   function readHistory() {
     try {
@@ -36,6 +37,19 @@
       tenderMeta: textFrom(row, ".tender-id"),
       viewedAt: new Date().toISOString()
     };
+  }
+
+  function buildViewUrl(record) {
+    const params = new URLSearchParams({
+      url: record.url,
+      title: record.title,
+      agency: record.agency,
+      announceDate: record.announceDate,
+      deadline: record.deadline,
+      budget: record.budget,
+      tenderMeta: record.tenderMeta
+    });
+    return `/pcc/view.html?${params.toString()}`;
   }
 
   function saveTenderRecord(record) {
@@ -89,15 +103,19 @@
       if (!sourceLink || !title) return;
 
       const titleLink = title.matches("a") ? title : document.createElement("a");
+      const titleText = title.textContent.trim();
       titleLink.className = `${title.className} tender-title-link`.trim();
-      titleLink.href = sourceLink.href;
+      const tenderRecord = collectTenderRecord(row, sourceLink, titleText);
+      titleLink.href = buildViewUrl(tenderRecord);
       titleLink.target = "_blank";
       titleLink.rel = "noreferrer";
       titleLink.title = "開啟標案頁面";
       titleLink.dataset.historyBound = titleLink.dataset.historyBound || "";
+      titleLink.dataset.targetUrl = sourceLink.href;
+      titleLink.dataset.enhancementVersion = ENHANCEMENT_VERSION;
 
       if (!title.matches("a")) {
-        titleLink.textContent = title.textContent;
+        titleLink.textContent = titleText;
         title.replaceWith(titleLink);
       }
 
@@ -137,6 +155,7 @@
     const resultRows = document.querySelector(RESULT_ROWS_SELECTOR);
     if (!resultRows) return;
 
+    document.documentElement.dataset.pccEnhancements = ENHANCEMENT_VERSION;
     document.addEventListener("mousedown", handleTenderActivation, true);
     document.addEventListener("pointerdown", handleTenderActivation, true);
     document.addEventListener("auxclick", handleTenderActivation, true);

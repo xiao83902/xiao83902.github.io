@@ -448,6 +448,19 @@ td a:hover {
   font-size: 1.08rem;
 }
 
+.view-redirect-panel {
+  gap: 12px;
+  justify-items: start;
+}
+
+.view-redirect-panel h1 {
+  font-size: clamp(1.6rem, 3vw, 2.15rem);
+}
+
+.view-redirect-copy {
+  color: var(--pcc-muted);
+}
+
 @media (max-width: 1040px) {
   .workspace.search-workspace {
     grid-template-columns: 1fr;

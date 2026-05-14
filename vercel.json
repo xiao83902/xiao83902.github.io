@@ -76,6 +76,14 @@
       "destination": "/pcc-static/history.html"
     },
     {
+      "source": "/pcc/view.html",
+      "destination": "/pcc-static/view.html"
+    },
+    {
+      "source": "/pcc/pcc-view.js",
+      "destination": "/pcc-static/pcc-view.js"
+    },
+    {
       "source": "/pcc/icon.svg",
       "destination": "/pcc-static/icon.svg"
     },
