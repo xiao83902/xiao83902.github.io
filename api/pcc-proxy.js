@@ -1,0 +1,109 @@
+const TARGET_ORIGIN = "http://nas220.i234.me:55721";
+const PUBLIC_BASE = "/pcc";
+
+const HOP_BY_HOP_HEADERS = new Set([
+  "connection",
+  "content-encoding",
+  "content-length",
+  "keep-alive",
+  "proxy-authenticate",
+  "proxy-authorization",
+  "te",
+  "trailer",
+  "transfer-encoding",
+  "upgrade"
+]);
+
+function buildTargetUrl(requestUrl) {
+  const url = new URL(requestUrl, "http://localhost");
+  const path = normalizePath(url.searchParams.get("path") || "");
+  url.searchParams.delete("path");
+
+  const target = new URL(path, TARGET_ORIGIN);
+  target.search = url.searchParams.toString();
+  return target;
+}
+
+function normalizePath(path) {
+  if (!path || path === "/") return "/";
+  return path.startsWith("/") ? path : `/${path}`;
+}
+
+function proxyHeaders(headers) {
+  const next = {};
+  for (const [key, value] of Object.entries(headers)) {
+    const lower = key.toLowerCase();
+    if (!HOP_BY_HOP_HEADERS.has(lower) && lower !== "host") {
+      next[key] = value;
+    }
+  }
+  next["accept-encoding"] = "identity";
+  return next;
+}
+
+function setResponseHeaders(res, headers, contentType) {
+  headers.forEach((value, key) => {
+    if (!HOP_BY_HOP_HEADERS.has(key.toLowerCase())) {
+      res.setHeader(key, value);
+    }
+  });
+  if (contentType) {
+    res.setHeader("content-type", contentType);
+  }
+}
+
+async function readRequestBody(req) {
+  if (req.method === "GET" || req.method === "HEAD") return undefined;
+
+  const chunks = [];
+  for await (const chunk of req) {
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks);
+}
+
+function rewriteText(text, contentType) {
+  if (contentType.includes("text/html")) {
+    return text
+      .replaceAll('href="/styles.css"', `href="${PUBLIC_BASE}/styles.css"`)
+      .replaceAll('href="/"', `href="${PUBLIC_BASE}/"`)
+      .replaceAll('href="/settings.html"', `href="${PUBLIC_BASE}/settings.html"`)
+      .replaceAll('src="/app.js"', `src="${PUBLIC_BASE}/app.js"`)
+      .replaceAll('src="/settings.js"', `src="${PUBLIC_BASE}/settings.js"`);
+  }
+
+  if (contentType.includes("javascript")) {
+    return text
+      .replaceAll('api("/api/', `api("${PUBLIC_BASE}/api/`)
+      .replaceAll("api('/api/", `api('${PUBLIC_BASE}/api/`);
+  }
+
+  return text;
+}
+
+module.exports = async function handler(req, res) {
+  try {
+    const target = buildTargetUrl(req.url);
+    const upstream = await fetch(target, {
+      method: req.method,
+      headers: proxyHeaders(req.headers),
+      body: await readRequestBody(req)
+    });
+
+    const contentType = upstream.headers.get("content-type") || "";
+    res.statusCode = upstream.status;
+
+    if (contentType.includes("text/html") || contentType.includes("javascript")) {
+      setResponseHeaders(res, upstream.headers, contentType);
+      res.end(rewriteText(await upstream.text(), contentType));
+      return;
+    }
+
+    setResponseHeaders(res, upstream.headers);
+    res.end(Buffer.from(await upstream.arrayBuffer()));
+  } catch (error) {
+    res.statusCode = 502;
+    res.setHeader("content-type", "text/plain; charset=utf-8");
+    res.end(`PCC proxy failed: ${error.message}`);
+  }
+};

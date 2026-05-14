@@ -13,6 +13,11 @@
   ],
   "redirects": [
     {
+      "source": "/pcc",
+      "destination": "/pcc/",
+      "permanent": false
+    },
+    {
       "source": "/monthly-fee-manager",
       "destination": "/monthly-fee-manager/",
       "permanent": false
@@ -24,6 +29,22 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/pcc/api/:path*",
+      "destination": "http://nas220.i234.me:55721/api/:path*"
+    },
+    {
+      "source": "/pcc/healthz",
+      "destination": "http://nas220.i234.me:55721/healthz"
+    },
+    {
+      "source": "/pcc/",
+      "destination": "/api/pcc-proxy?path="
+    },
+    {
+      "source": "/pcc/:path*",
+      "destination": "/api/pcc-proxy?path=:path*"
+    },
     {
       "source": "/bankloan",
       "destination": "https://bank-loan-auto-calculation-system-pxr2m3v3na-de.a.run.app/"
