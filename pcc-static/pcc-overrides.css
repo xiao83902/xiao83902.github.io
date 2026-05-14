@@ -266,18 +266,20 @@ td a:hover {
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: var(--pcc-ink);
+  color: #124c45;
   padding: 0;
   text-align: left;
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: rgba(15, 118, 110, 0.26);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 }
 
 .tender-title-link:hover,
 .tender-title-link:focus {
   background: transparent;
   color: var(--pcc-teal-deep);
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  text-decoration-color: rgba(15, 118, 110, 0.72);
 }
 
 .tender-title-link:focus-visible {
