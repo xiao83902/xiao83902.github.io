@@ -310,6 +310,20 @@ td a:hover {
   border-radius: 8px;
 }
 
+@media (max-width: 1040px) {
+  .workspace.search-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .controls {
+    position: static;
+  }
+
+  .controls textarea {
+    min-height: 132px;
+  }
+}
+
 @media (max-width: 640px) {
   body {
     background: #f7f8f5;
