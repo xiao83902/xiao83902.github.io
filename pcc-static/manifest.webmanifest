@@ -1,0 +1,36 @@
+{
+  "id": "/pcc/",
+  "name": "工程標案搜尋",
+  "short_name": "工程標案",
+  "description": "每日追蹤政府工程標案，支援 LINE 推播與定時搜尋。",
+  "start_url": "/pcc/",
+  "scope": "/pcc/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "browser"],
+  "background_color": "#f5f7f4",
+  "theme_color": "#0f766e",
+  "orientation": "any",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/pcc/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "立即搜尋",
+      "short_name": "搜尋",
+      "url": "/pcc/",
+      "description": "開啟標案搜尋頁"
+    },
+    {
+      "name": "推播設定",
+      "short_name": "設定",
+      "url": "/pcc/settings.html",
+      "description": "開啟 LINE 推播與排程設定"
+    }
+  ]
+}

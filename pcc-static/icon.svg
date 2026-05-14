@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">工程標案搜尋</title>
+  <desc id="desc">A teal tender document icon with a magnifying glass.</desc>
+  <rect width="512" height="512" rx="116" fill="#0f766e"/>
+  <path fill="#f8faf7" d="M154 104h158l70 70v202c0 28-18 46-46 46H154c-28 0-46-18-46-46V150c0-28 18-46 46-46Z"/>
+  <path fill="#a7f3d0" d="M304 106v70h74l-74-70Z"/>
+  <path fill="#134e4a" d="M160 182h170v28H160v-28Zm0 62h154v28H160v-28Zm0 62h92v28h-92v-28Z"/>
+  <circle cx="309" cy="310" r="54" fill="none" stroke="#f59e0b" stroke-width="32"/>
+  <path fill="#f59e0b" d="m347 348 74 74c10 10 10 25 0 35s-25 10-35 0l-74-74 35-35Z"/>
+</svg>

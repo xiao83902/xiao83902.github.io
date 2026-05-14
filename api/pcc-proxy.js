@@ -1,5 +1,21 @@
 const TARGET_ORIGIN = "http://nas220.i234.me:55721";
 const PUBLIC_BASE = "/pcc";
+const PWA_HEAD = `
+    <meta name="theme-color" content="#0f766e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="工程標案">
+    <link rel="manifest" href="${PUBLIC_BASE}/manifest.webmanifest">
+    <link rel="icon" href="${PUBLIC_BASE}/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="${PUBLIC_BASE}/pcc-overrides.css">`;
+const PWA_SCRIPT = `
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("${PUBLIC_BASE}/sw.js", { scope: "${PUBLIC_BASE}/" }).catch(() => {});
+        });
+      }
+    </script>`;
 
 const HOP_BY_HOP_HEADERS = new Set([
   "connection",
@@ -64,12 +80,15 @@ async function readRequestBody(req) {
 
 function rewriteText(text, contentType) {
   if (contentType.includes("text/html")) {
-    return text
+    const rewritten = text
       .replaceAll('href="/styles.css"', `href="${PUBLIC_BASE}/styles.css"`)
       .replaceAll('href="/"', `href="${PUBLIC_BASE}/"`)
       .replaceAll('href="/settings.html"', `href="${PUBLIC_BASE}/settings.html"`)
       .replaceAll('src="/app.js"', `src="${PUBLIC_BASE}/app.js"`)
       .replaceAll('src="/settings.js"', `src="${PUBLIC_BASE}/settings.js"`);
+    return rewritten
+      .replace("</head>", `${PWA_HEAD}\n  </head>`)
+      .replace("</body>", `${PWA_SCRIPT}\n  </body>`);
   }
 
   if (contentType.includes("javascript")) {
