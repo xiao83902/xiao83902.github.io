@@ -1,4 +1,4 @@
-const ASSET_VERSION = "20260514-11";
+const ASSET_VERSION = "20260514-12";
 const CACHE_NAME = `pcc-tender-${ASSET_VERSION}`;
 const APP_SHELL = [
   "/pcc/",
@@ -12,7 +12,7 @@ const APP_SHELL = [
   `/pcc/pcc-enhancements.js?v=${ASSET_VERSION}`,
   `/pcc/pcc-history.js?v=${ASSET_VERSION}`,
   `/pcc/pcc-view.js?v=${ASSET_VERSION}`,
-  "/pcc/manifest.webmanifest",
+  `/pcc/manifest.webmanifest?v=${ASSET_VERSION}`,
   `/pcc/favicon.png?v=${ASSET_VERSION}`,
   `/pcc/apple-touch-icon.png?v=${ASSET_VERSION}`,
   `/pcc/icon-192.png?v=${ASSET_VERSION}`,

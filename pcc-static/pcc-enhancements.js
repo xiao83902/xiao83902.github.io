@@ -9,7 +9,7 @@
   const RESULT_META_SELECTOR = "#resultMeta";
   const ORG_INPUT_SELECTOR = "#orgName";
   const SEARCH_BUTTON_SELECTOR = "#searchButton";
-  const ENHANCEMENT_VERSION = "20260514-11";
+  const ENHANCEMENT_VERSION = "20260514-12";
   let amountSortApplying = false;
 
   function readHistory() {
