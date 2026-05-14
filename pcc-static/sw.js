@@ -1,4 +1,4 @@
-const ASSET_VERSION = "20260514-1";
+const ASSET_VERSION = "20260514-2";
 const CACHE_NAME = `pcc-tender-${ASSET_VERSION}`;
 const APP_SHELL = [
   "/pcc/",
@@ -7,6 +7,7 @@ const APP_SHELL = [
   `/pcc/pcc-overrides.css?v=${ASSET_VERSION}`,
   "/pcc/app.js",
   "/pcc/settings.js",
+  `/pcc/pcc-enhancements.js?v=${ASSET_VERSION}`,
   "/pcc/manifest.webmanifest",
   "/pcc/icon.svg"
 ];

@@ -1,34 +1,63 @@
 :root {
   --pcc-surface: #ffffff;
   --pcc-surface-soft: #f3f8f6;
+  --pcc-surface-warm: #fffaf3;
   --pcc-ink: #14231f;
   --pcc-muted: #5f6f68;
   --pcc-line: #d7e2dd;
+  --pcc-line-strong: #bfd1ca;
   --pcc-teal: #0f766e;
+  --pcc-teal-deep: #115e59;
   --pcc-blue: #2563eb;
   --pcc-amber: #b45309;
   --pcc-shadow: 0 18px 48px rgba(18, 45, 39, 0.12);
+  --pcc-shadow-soft: 0 10px 28px rgba(18, 45, 39, 0.08);
 }
 
 body {
   background:
-    linear-gradient(180deg, #eef7f4 0, #f7f8f5 260px, #f7f8f5 100%);
+    linear-gradient(180deg, #eef7f4 0, #f7f8f5 300px, #f7f8f5 100%);
+  color: var(--pcc-ink);
 }
 
 .shell {
   width: min(1240px, calc(100% - 32px));
+  padding: 24px 0 44px;
 }
 
 .topbar {
   align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--pcc-line);
+}
+
+.eyebrow {
+  color: var(--pcc-amber);
+  letter-spacing: 0;
+}
+
+h1 {
+  color: #10231f;
+  font-size: clamp(1.8rem, 2.5vw, 2.45rem);
 }
 
 .topnav {
+  border-color: var(--pcc-line-strong);
   border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(20, 35, 31, 0.05);
 }
 
 .nav-link {
   border-radius: 7px;
+}
+
+.nav-link.active {
+  background: var(--pcc-teal);
+}
+
+.workspace.search-workspace {
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+  gap: 20px;
 }
 
 .panel,
@@ -37,8 +66,60 @@ body {
   border-color: var(--pcc-line);
 }
 
+.panel {
+  box-shadow: var(--pcc-shadow-soft);
+}
+
+.controls,
+.settings-panel {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.field {
+  gap: 8px;
+}
+
+label,
+.metric span {
+  letter-spacing: 0;
+}
+
+input,
+select,
+textarea {
+  border-color: var(--pcc-line);
+  background: #ffffff;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--pcc-teal);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.14);
+}
+
+button {
+  background: var(--pcc-teal);
+  box-shadow: 0 8px 18px rgba(15, 118, 110, 0.16);
+}
+
+button:hover {
+  background: var(--pcc-teal-deep);
+}
+
+.secondary {
+  background: #eaf4f0;
+  color: var(--pcc-teal-deep);
+  box-shadow: none;
+}
+
+.secondary:hover {
+  background: #dcece6;
+}
+
 .results {
   box-shadow: var(--pcc-shadow);
+  background: rgba(255, 255, 255, 0.96);
 }
 
 .metric-grid.compact {
@@ -47,6 +128,7 @@ body {
 
 .metric {
   background: linear-gradient(180deg, #ffffff, var(--pcc-surface-soft));
+  border-radius: 8px;
 }
 
 .metric span {
@@ -77,7 +159,7 @@ body {
 table {
   min-width: 760px;
   border-collapse: separate;
-  border-spacing: 0 10px;
+  border-spacing: 0 9px;
 }
 
 thead th {
@@ -95,21 +177,28 @@ thead th:first-child {
 }
 
 thead th:last-child {
+  display: none;
+}
+
+thead th:nth-last-child(2) {
   border-radius: 0 8px 8px 0;
 }
 
 tbody tr {
-  transition: transform 0.16s ease, box-shadow 0.16s ease;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
 }
 
 tbody tr:hover {
   transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(20, 35, 31, 0.08);
 }
 
 tbody td {
   background: var(--pcc-surface);
   border-top: 1px solid var(--pcc-line);
   border-bottom: 1px solid var(--pcc-line);
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 tbody td:first-child {
@@ -121,6 +210,10 @@ tbody td:first-child {
 }
 
 tbody td:last-child {
+  display: none;
+}
+
+tbody td:nth-last-child(2) {
   border-right: 1px solid var(--pcc-line);
   border-radius: 0 8px 8px 0;
 }
@@ -162,8 +255,34 @@ td a:hover {
 
 .tender-title {
   color: var(--pcc-ink);
-  font-size: 1rem;
+  font-size: 1.02rem;
   line-height: 1.45;
+  font-weight: 900;
+}
+
+.tender-title-link {
+  display: inline;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--pcc-ink);
+  padding: 0;
+  text-align: left;
+  text-decoration: none;
+}
+
+.tender-title-link:hover,
+.tender-title-link:focus {
+  background: transparent;
+  color: var(--pcc-teal-deep);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.tender-title-link:focus-visible {
+  outline: 3px solid rgba(15, 118, 110, 0.22);
+  outline-offset: 3px;
 }
 
 .tender-id {
@@ -208,6 +327,10 @@ td a:hover {
     padding: 14px;
   }
 
+  .topbar {
+    align-items: stretch;
+  }
+
   .table-wrap {
     overflow: visible;
   }
@@ -233,7 +356,8 @@ td a:hover {
 
   tbody td,
   tbody td:first-child,
-  tbody td:last-child {
+  tbody td:last-child,
+  tbody td:nth-last-child(2) {
     border: 0;
     border-radius: 0;
     background: transparent;

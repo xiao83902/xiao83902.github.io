@@ -64,6 +64,10 @@
       "destination": "/pcc-static/pcc-overrides.css"
     },
     {
+      "source": "/pcc/pcc-enhancements.js",
+      "destination": "/pcc-static/pcc-enhancements.js"
+    },
+    {
       "source": "/pcc/icon.svg",
       "destination": "/pcc-static/icon.svg"
     },

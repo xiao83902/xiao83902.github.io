@@ -1,6 +1,6 @@
 const TARGET_ORIGIN = "http://nas220.i234.me:55721";
 const PUBLIC_BASE = "/pcc";
-const ASSET_VERSION = "20260514-1";
+const ASSET_VERSION = "20260514-2";
 const PWA_HEAD = `
     <meta name="theme-color" content="#0f766e">
     <meta name="mobile-web-app-capable" content="yes">
@@ -10,6 +10,7 @@ const PWA_HEAD = `
     <link rel="icon" href="${PUBLIC_BASE}/icon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="${PUBLIC_BASE}/pcc-overrides.css?v=${ASSET_VERSION}">`;
 const PWA_SCRIPT = `
+    <script src="${PUBLIC_BASE}/pcc-enhancements.js?v=${ASSET_VERSION}"></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
