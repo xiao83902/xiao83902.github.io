@@ -43,6 +43,21 @@
     writeHistory([record, ...existing]);
   }
 
+  function rememberTenderFromLink(link) {
+    const row = link.closest("tr");
+    if (!row) return;
+
+    const sourceLink = row.querySelector(`${LINK_CELL_SELECTOR} a[href]`) || link;
+    saveTenderRecord(collectTenderRecord(row, sourceLink, link.textContent.trim()));
+  }
+
+  function handleTenderActivation(event) {
+    const link = event.target.closest?.(".tender-title-link");
+    if (!link) return;
+    if (event.type === "keydown" && event.key !== "Enter" && event.key !== " ") return;
+    rememberTenderFromLink(link);
+  }
+
   function searchAgency(agency) {
     const orgName = document.querySelector(ORG_INPUT_SELECTOR);
     const searchButton = document.querySelector(SEARCH_BUTTON_SELECTOR);
@@ -88,8 +103,9 @@
 
       if (!titleLink.dataset.historyBound) {
         const rememberTender = () => {
-          saveTenderRecord(collectTenderRecord(row, sourceLink, titleLink.textContent.trim()));
+          rememberTenderFromLink(titleLink);
         };
+        titleLink.addEventListener("mousedown", rememberTender);
         titleLink.addEventListener("pointerdown", rememberTender);
         titleLink.addEventListener("auxclick", rememberTender);
         titleLink.addEventListener("click", rememberTender);
@@ -120,6 +136,12 @@
   function boot() {
     const resultRows = document.querySelector(RESULT_ROWS_SELECTOR);
     if (!resultRows) return;
+
+    document.addEventListener("mousedown", handleTenderActivation, true);
+    document.addEventListener("pointerdown", handleTenderActivation, true);
+    document.addEventListener("auxclick", handleTenderActivation, true);
+    document.addEventListener("click", handleTenderActivation, true);
+    document.addEventListener("keydown", handleTenderActivation, true);
 
     enhanceTenderRows();
     new MutationObserver(enhanceTenderRows).observe(resultRows, {
