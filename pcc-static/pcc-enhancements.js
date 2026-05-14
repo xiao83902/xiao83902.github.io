@@ -87,8 +87,14 @@
       }
 
       if (!titleLink.dataset.historyBound) {
-        titleLink.addEventListener("click", () => {
+        const rememberTender = () => {
           saveTenderRecord(collectTenderRecord(row, sourceLink, titleLink.textContent.trim()));
+        };
+        titleLink.addEventListener("pointerdown", rememberTender);
+        titleLink.addEventListener("auxclick", rememberTender);
+        titleLink.addEventListener("click", rememberTender);
+        titleLink.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") rememberTender();
         });
         titleLink.dataset.historyBound = "true";
       }
