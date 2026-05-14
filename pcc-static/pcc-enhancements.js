@@ -4,9 +4,11 @@
   const RESULT_ROWS_SELECTOR = "#resultRows";
   const LINK_CELL_SELECTOR = 'td[data-label="連結"]';
   const AGENCY_CELL_SELECTOR = 'td[data-label="機關"]';
+  const KEYWORDS_SELECTOR = "#keywords";
+  const RESULT_META_SELECTOR = "#resultMeta";
   const ORG_INPUT_SELECTOR = "#orgName";
   const SEARCH_BUTTON_SELECTOR = "#searchButton";
-  const ENHANCEMENT_VERSION = "20260514-8";
+  const ENHANCEMENT_VERSION = "20260514-9";
 
   function readHistory() {
     try {
@@ -88,6 +90,180 @@
     }
   }
 
+  function parseKeywords(value) {
+    return String(value || "")
+      .split(/\r?\n|,|，|、|;|；/)
+      .map((item) => item.trim())
+      .filter(Boolean)
+      .filter((item, index, list) => list.indexOf(item) === index);
+  }
+
+  function enhanceKeywordInput() {
+    const textarea = document.querySelector(KEYWORDS_SELECTOR);
+    if (!textarea || textarea.dataset.keywordEnhanced) return;
+
+    textarea.dataset.keywordEnhanced = "true";
+    textarea.classList.add("keyword-native-textarea");
+    textarea.tabIndex = -1;
+    textarea.setAttribute("aria-hidden", "true");
+
+    const composer = document.createElement("div");
+    composer.className = "keyword-composer";
+    composer.innerHTML = `
+      <div class="keyword-chip-list" aria-label="目前關鍵字"></div>
+      <input class="keyword-chip-input" type="text" autocomplete="off" placeholder="輸入關鍵字後按 Enter">
+      <button class="keyword-clear-button" type="button">清空</button>
+    `;
+
+    const helper = document.createElement("p");
+    helper.className = "keyword-helper";
+    helper.textContent = "可用 Enter、逗號或頓號新增；每個標籤會分別搜尋後合併結果。";
+
+    textarea.insertAdjacentElement("afterend", helper);
+    textarea.insertAdjacentElement("afterend", composer);
+
+    const list = composer.querySelector(".keyword-chip-list");
+    const input = composer.querySelector(".keyword-chip-input");
+    const clearButton = composer.querySelector(".keyword-clear-button");
+    const label = document.querySelector('label[for="keywords"]');
+    const state = {
+      keywords: [],
+      lastTextareaValue: ""
+    };
+
+    function writeTextarea() {
+      textarea.value = state.keywords.join("\n");
+      state.lastTextareaValue = textarea.value;
+      textarea.dispatchEvent(new Event("input", { bubbles: true }));
+      textarea.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
+    function render() {
+      list.innerHTML = "";
+      state.keywords.forEach((keyword) => {
+        const chip = document.createElement("span");
+        chip.className = "keyword-chip";
+        chip.innerHTML = `
+          <span>${escapeHtml(keyword)}</span>
+          <button type="button" aria-label="移除 ${escapeHtml(keyword)}">×</button>
+        `;
+        chip.querySelector("button").addEventListener("click", () => {
+          state.keywords = state.keywords.filter((item) => item !== keyword);
+          writeTextarea();
+          render();
+          input.focus();
+        });
+        list.append(chip);
+      });
+      composer.classList.toggle("is-empty", state.keywords.length === 0);
+      clearButton.disabled = state.keywords.length === 0;
+    }
+
+    function syncFromTextarea() {
+      state.keywords = parseKeywords(textarea.value);
+      state.lastTextareaValue = textarea.value;
+      render();
+    }
+
+    function addKeywords(value) {
+      const next = parseKeywords(value);
+      if (next.length === 0) return;
+      state.keywords = [...new Set([...state.keywords, ...next])];
+      input.value = "";
+      writeTextarea();
+      render();
+    }
+
+    composer.addEventListener("click", (event) => {
+      if (!event.target.closest("button")) input.focus();
+    });
+
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === "," || event.key === "，" || event.key === "、" || event.key === ";") {
+        event.preventDefault();
+        addKeywords(input.value);
+      } else if (event.key === "Backspace" && !input.value && state.keywords.length > 0) {
+        state.keywords = state.keywords.slice(0, -1);
+        writeTextarea();
+        render();
+      }
+    });
+
+    input.addEventListener("paste", (event) => {
+      const text = event.clipboardData?.getData("text") || "";
+      if (parseKeywords(text).length > 1) {
+        event.preventDefault();
+        addKeywords(text);
+      }
+    });
+
+    input.addEventListener("blur", () => addKeywords(input.value));
+    clearButton.addEventListener("click", () => {
+      state.keywords = [];
+      writeTextarea();
+      render();
+      input.focus();
+    });
+
+    label?.addEventListener("click", (event) => {
+      event.preventDefault();
+      input.focus();
+    });
+
+    syncFromTextarea();
+    let syncTicks = 0;
+    const syncTimer = window.setInterval(() => {
+      syncTicks += 1;
+      if (textarea.value !== state.lastTextareaValue) syncFromTextarea();
+      if (syncTicks > 30) window.clearInterval(syncTimer);
+    }, 200);
+  }
+
+  function enhanceResultKeywordSummary() {
+    const meta = document.querySelector(RESULT_META_SELECTOR);
+    if (!meta || meta.dataset.summaryEnhanced) return;
+
+    meta.dataset.summaryEnhanced = "true";
+    document.body.classList.add("keyword-summary-enhanced");
+
+    const summary = document.createElement("div");
+    summary.className = "result-keyword-summary";
+    summary.setAttribute("aria-live", "polite");
+    meta.insertAdjacentElement("afterend", summary);
+
+    function render() {
+      const raw = meta.textContent.trim();
+      const matches = [...raw.matchAll(/([^：\s]+)：\s*([\d,]+)\s*筆/g)];
+      if (matches.length === 0) {
+        summary.innerHTML = `<span class="result-summary-empty">${escapeHtml(raw || "等待搜尋")}</span>`;
+        return;
+      }
+
+      summary.innerHTML = matches.map((match) => `
+        <span class="result-summary-chip">
+          <span>${escapeHtml(match[1])}</span>
+          <strong>${escapeHtml(match[2])}</strong>
+        </span>
+      `).join("");
+    }
+
+    render();
+    new MutationObserver(render).observe(meta, {
+      childList: true,
+      characterData: true,
+      subtree: true
+    });
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
   function enhanceTenderRows() {
     const rows = document.querySelectorAll(`${RESULT_ROWS_SELECTOR} tr`);
     rows.forEach((row) => {
@@ -152,10 +328,13 @@
   }
 
   function boot() {
+    document.documentElement.dataset.pccEnhancements = ENHANCEMENT_VERSION;
+    enhanceKeywordInput();
+    enhanceResultKeywordSummary();
+
     const resultRows = document.querySelector(RESULT_ROWS_SELECTOR);
     if (!resultRows) return;
 
-    document.documentElement.dataset.pccEnhancements = ENHANCEMENT_VERSION;
     document.addEventListener("mousedown", handleTenderActivation, true);
     document.addEventListener("pointerdown", handleTenderActivation, true);
     document.addEventListener("auxclick", handleTenderActivation, true);
