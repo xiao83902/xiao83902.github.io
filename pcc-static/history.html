@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>閱覽記錄｜工程標案搜尋</title>
+    <meta name="theme-color" content="#0f766e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="工程標案">
+    <link rel="manifest" href="/pcc/manifest.webmanifest">
+    <link rel="icon" href="/pcc/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/pcc/styles.css">
+    <link rel="stylesheet" href="/pcc/pcc-overrides.css?v=20260514-5">
+  </head>
+  <body class="history-page">
+    <main class="shell narrow">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">政府電子採購網</p>
+          <h1>閱覽記錄</h1>
+        </div>
+        <nav class="topnav" aria-label="主要導覽">
+          <a class="nav-link" href="/pcc/">搜尋</a>
+          <a class="nav-link" href="/pcc/settings.html">推播設定</a>
+          <a class="nav-link active" href="/pcc/history.html">閱覽記錄</a>
+        </nav>
+      </header>
+
+      <section class="panel history-panel">
+        <div class="history-toolbar">
+          <div class="field">
+            <label for="historySearch">查詢記錄</label>
+            <input id="historySearch" type="search" autocomplete="off" placeholder="輸入標案、機關、案號或日期">
+          </div>
+          <button class="ghost history-clear-all" id="clearHistoryButton" type="button">刪除全部</button>
+        </div>
+
+        <div class="metric-grid compact history-metrics">
+          <article class="metric">
+            <span>已閱覽</span>
+            <strong id="historyCount">0</strong>
+          </article>
+          <article class="metric">
+            <span>最近閱覽</span>
+            <strong id="latestViewed">尚無記錄</strong>
+          </article>
+        </div>
+
+        <div class="history-list" id="historyList"></div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="/pcc/pcc-history.js?v=20260514-5"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/pcc/sw.js?v=20260514-5", { scope: "/pcc/" }).catch(() => {});
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -68,6 +68,14 @@
       "destination": "/pcc-static/pcc-enhancements.js"
     },
     {
+      "source": "/pcc/pcc-history.js",
+      "destination": "/pcc-static/pcc-history.js"
+    },
+    {
+      "source": "/pcc/history.html",
+      "destination": "/pcc-static/history.html"
+    },
+    {
       "source": "/pcc/icon.svg",
       "destination": "/pcc-static/icon.svg"
     },

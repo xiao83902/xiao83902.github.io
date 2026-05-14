@@ -1,6 +1,6 @@
 const TARGET_ORIGIN = "http://nas220.i234.me:55721";
 const PUBLIC_BASE = "/pcc";
-const ASSET_VERSION = "20260514-4";
+const ASSET_VERSION = "20260514-5";
 const PWA_HEAD = `
     <meta name="theme-color" content="#0f766e">
     <meta name="mobile-web-app-capable" content="yes">
@@ -87,7 +87,8 @@ function rewriteText(text, contentType) {
       .replaceAll('href="/"', `href="${PUBLIC_BASE}/"`)
       .replaceAll('href="/settings.html"', `href="${PUBLIC_BASE}/settings.html"`)
       .replaceAll('src="/app.js"', `src="${PUBLIC_BASE}/app.js"`)
-      .replaceAll('src="/settings.js"', `src="${PUBLIC_BASE}/settings.js"`);
+      .replaceAll('src="/settings.js"', `src="${PUBLIC_BASE}/settings.js"`)
+      .replace("</nav>", `          <a class="nav-link" href="${PUBLIC_BASE}/history.html">閱覽記錄</a>\n        </nav>`);
     return rewritten
       .replace("</head>", `${PWA_HEAD}\n  </head>`)
       .replace("</body>", `${PWA_SCRIPT}\n  </body>`);
