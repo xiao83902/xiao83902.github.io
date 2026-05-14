@@ -1,4 +1,4 @@
-const ASSET_VERSION = "20260514-10";
+const ASSET_VERSION = "20260514-11";
 const CACHE_NAME = `pcc-tender-${ASSET_VERSION}`;
 const APP_SHELL = [
   "/pcc/",
@@ -13,7 +13,10 @@ const APP_SHELL = [
   `/pcc/pcc-history.js?v=${ASSET_VERSION}`,
   `/pcc/pcc-view.js?v=${ASSET_VERSION}`,
   "/pcc/manifest.webmanifest",
-  "/pcc/icon.svg"
+  `/pcc/favicon.png?v=${ASSET_VERSION}`,
+  `/pcc/apple-touch-icon.png?v=${ASSET_VERSION}`,
+  `/pcc/icon-192.png?v=${ASSET_VERSION}`,
+  `/pcc/icon-512.png?v=${ASSET_VERSION}`
 ];
 
 self.addEventListener("install", (event) => {

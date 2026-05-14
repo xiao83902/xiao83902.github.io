@@ -88,6 +88,22 @@
       "destination": "/pcc-static/icon.svg"
     },
     {
+      "source": "/pcc/favicon.png",
+      "destination": "/pcc-static/favicon.png"
+    },
+    {
+      "source": "/pcc/apple-touch-icon.png",
+      "destination": "/pcc-static/apple-touch-icon.png"
+    },
+    {
+      "source": "/pcc/icon-192.png",
+      "destination": "/pcc-static/icon-192.png"
+    },
+    {
+      "source": "/pcc/icon-512.png",
+      "destination": "/pcc-static/icon-512.png"
+    },
+    {
       "source": "/pcc/api/:path*",
       "destination": "http://nas220.i234.me:55721/api/:path*"
     },

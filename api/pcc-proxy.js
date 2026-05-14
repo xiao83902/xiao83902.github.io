@@ -1,13 +1,14 @@
 const TARGET_ORIGIN = "http://nas220.i234.me:55721";
 const PUBLIC_BASE = "/pcc";
-const ASSET_VERSION = "20260514-10";
+const ASSET_VERSION = "20260514-11";
 const PWA_HEAD = `
     <meta name="theme-color" content="#0f766e">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="工程標案">
     <link rel="manifest" href="${PUBLIC_BASE}/manifest.webmanifest">
-    <link rel="icon" href="${PUBLIC_BASE}/icon.svg" type="image/svg+xml">
+    <link rel="icon" href="${PUBLIC_BASE}/favicon.png?v=${ASSET_VERSION}" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="${PUBLIC_BASE}/apple-touch-icon.png?v=${ASSET_VERSION}">
     <link rel="stylesheet" href="${PUBLIC_BASE}/pcc-overrides.css?v=${ASSET_VERSION}">`;
 const PWA_SCRIPT = `
     <script src="${PUBLIC_BASE}/pcc-enhancements.js?v=${ASSET_VERSION}"></script>
