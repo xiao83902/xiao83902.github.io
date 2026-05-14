@@ -75,7 +75,7 @@ body {
 }
 
 table {
-  min-width: 900px;
+  min-width: 760px;
   border-collapse: separate;
   border-spacing: 0 10px;
 }
@@ -130,6 +130,13 @@ td:nth-child(4),
 td:nth-child(5) {
   color: #344b44;
   font-size: 0.93rem;
+}
+
+td:nth-child(1),
+td:nth-child(4),
+td:nth-child(5) {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 td:nth-child(5) {
