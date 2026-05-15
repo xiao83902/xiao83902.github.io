@@ -45,8 +45,18 @@
       "permanent": false
     },
     {
+      "source": "/1credit",
+      "destination": "/1credit/",
+      "permanent": false
+    },
+    {
       "source": "/1Credit",
-      "destination": "/1Credit/",
+      "destination": "/1credit/",
+      "permanent": false
+    },
+    {
+      "source": "/1Credit/:path*",
+      "destination": "/1credit/:path*",
       "permanent": false
     }
   ],
@@ -150,6 +160,14 @@
     {
       "source": "/monthly-fee-manager/:path*",
       "destination": "https://monthly-fee-manager.vercel.app/:path*"
+    },
+    {
+      "source": "/1credit/",
+      "destination": "https://knas718.i234.me:5001/1credit/"
+    },
+    {
+      "source": "/1credit/:path*",
+      "destination": "https://knas718.i234.me:5001/1credit/:path*"
     },
     {
       "source": "/hotel-parking-fee",
