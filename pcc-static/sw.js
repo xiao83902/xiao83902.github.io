@@ -1,4 +1,4 @@
-const ASSET_VERSION = "20260515-1";
+const ASSET_VERSION = "20260515-2";
 const CACHE_NAME = `pcc-tender-${ASSET_VERSION}`;
 const APP_SHELL = [
   "/pcc/",
