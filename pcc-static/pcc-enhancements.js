@@ -9,7 +9,7 @@
   const RESULT_META_SELECTOR = "#resultMeta";
   const ORG_INPUT_SELECTOR = "#orgName";
   const SEARCH_BUTTON_SELECTOR = "#searchButton";
-  const ENHANCEMENT_VERSION = "20260515-4";
+  const ENHANCEMENT_VERSION = "20260518-1";
   let amountSortApplying = false;
 
   function readHistory() {
@@ -61,12 +61,44 @@
     writeHistory([record, ...existing]);
   }
 
+  function readViewedIds() {
+    return new Set(
+      readHistory()
+        .map((record) => record.id || record.url)
+        .filter(Boolean)
+    );
+  }
+
+  function setTenderViewedState(row, viewed) {
+    row.classList.toggle("is-viewed-tender", viewed);
+    row.dataset.viewedTender = viewed ? "true" : "false";
+
+    const titleLink = row.querySelector(".tender-title-link");
+    if (!titleLink) return;
+
+    const existingBadge = row.querySelector(".viewed-tender-badge");
+    if (!viewed) {
+      existingBadge?.remove();
+      titleLink.removeAttribute("aria-label");
+      return;
+    }
+
+    titleLink.setAttribute("aria-label", `${titleLink.textContent.trim()}，已看過`);
+    if (existingBadge) return;
+
+    const badge = document.createElement("span");
+    badge.className = "viewed-tender-badge";
+    badge.textContent = "已看過";
+    titleLink.insertAdjacentElement("afterend", badge);
+  }
+
   function rememberTenderFromLink(link) {
     const row = link.closest("tr");
     if (!row) return;
 
     const sourceLink = row.querySelector(`${LINK_CELL_SELECTOR} a[href]`) || link;
     saveTenderRecord(collectTenderRecord(row, sourceLink, link.textContent.trim()));
+    setTenderViewedState(row, true);
   }
 
   function handleTenderActivation(event) {
@@ -355,6 +387,8 @@
 
   function enhanceTenderRows() {
     const rows = document.querySelectorAll(`${RESULT_ROWS_SELECTOR} tr`);
+    const viewedIds = readViewedIds();
+
     rows.forEach((row) => {
       const sourceLink = row.querySelector(`${LINK_CELL_SELECTOR} a[href]`);
       const title = row.querySelector(".tender-title");
@@ -412,6 +446,7 @@
         }
       }
 
+      setTenderViewedState(row, viewedIds.has(sourceLink.href));
       row.classList.add("is-title-linked");
     });
   }
@@ -440,6 +475,14 @@
     new MutationObserver(refreshResults).observe(resultRows, {
       childList: true,
       subtree: true
+    });
+
+    window.addEventListener("focus", enhanceTenderRows);
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) enhanceTenderRows();
+    });
+    window.addEventListener("storage", (event) => {
+      if (event.key === HISTORY_KEY) enhanceTenderRows();
     });
   }
 

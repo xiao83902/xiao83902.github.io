@@ -474,6 +474,52 @@ td a:hover {
   outline-offset: 3px;
 }
 
+.viewed-tender-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 22px;
+  margin: 7px 0 0 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: #6b7280;
+  font-size: 0.76rem;
+  font-weight: 900;
+  padding: 2px 9px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+tbody tr.is-viewed-tender {
+  opacity: 0.74;
+}
+
+tbody tr.is-viewed-tender td {
+  background: #f5f6f5;
+  color: #64706b;
+}
+
+tbody tr.is-viewed-tender td:first-child {
+  color: #9a8a5a;
+}
+
+tbody tr.is-viewed-tender .tender-title-link {
+  color: #6b7280;
+  text-decoration-color: rgba(107, 114, 128, 0.32);
+}
+
+tbody tr.is-viewed-tender .tender-title-link:hover,
+tbody tr.is-viewed-tender .tender-title-link:focus {
+  color: #475569;
+  text-decoration-color: rgba(71, 85, 105, 0.65);
+}
+
+tbody tr.is-viewed-tender .agency-search-link {
+  color: #64748b;
+  text-decoration-color: rgba(100, 116, 139, 0.28);
+}
+
 .agency-search-link {
   min-height: 0;
   border: 0;
