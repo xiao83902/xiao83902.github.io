@@ -1,6 +1,6 @@
-const TARGET_ORIGIN = "http://nas220.i234.me:55721";
+const TARGET_ORIGIN = "https://nas220.i234.me";
 const PUBLIC_BASE = "/pcc";
-const ASSET_VERSION = "20260518-1";
+const ASSET_VERSION = "20260527-1";
 const PWA_HEAD = `
     <meta name="theme-color" content="#0f766e">
     <meta name="mobile-web-app-capable" content="yes">
