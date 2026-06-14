@@ -115,11 +115,11 @@
     },
     {
       "source": "/pcc/api/:path*",
-      "destination": "https://nas220.i234.me/api/:path*"
+      "destination": "http://nas220.i234.me:55721/api/:path*"
     },
     {
       "source": "/pcc/healthz",
-      "destination": "https://nas220.i234.me/healthz"
+      "destination": "http://nas220.i234.me:55721/healthz"
     },
     {
       "source": "/pcc/",
