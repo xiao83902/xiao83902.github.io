@@ -1,6 +1,6 @@
 const TARGET_ORIGIN = "http://pcc.nas220.i234.me";
 const PUBLIC_BASE = "/pcc";
-const ASSET_VERSION = "20260702-ui2";
+const ASSET_VERSION = "20260702-ui3";
 const PWA_HEAD = `
     <meta name="theme-color" content="#0f766e">
     <meta name="mobile-web-app-capable" content="yes">
