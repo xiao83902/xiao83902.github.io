@@ -27,7 +27,7 @@
 .keyword-composer {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 76px;
-  gap: 8px;
+  gap: 6px;
   align-items: start;
   min-height: 64px;
   border: 1px solid var(--pcc-line);
@@ -46,7 +46,7 @@
   grid-column: 1 / 2;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
   align-content: flex-start;
   align-items: center;
   min-width: 0;
@@ -88,9 +88,9 @@
 }
 
 .keyword-chip-input {
-  flex: 1 1 104px;
+  flex: 1 1 72px;
   width: auto;
-  min-width: min(104px, 100%);
+  min-width: min(48px, 100%);
   border: 0;
   border-radius: 0;
   min-height: 42px;

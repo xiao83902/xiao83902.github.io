@@ -10,7 +10,7 @@
   const RESULT_META_SELECTOR = "#resultMeta";
   const ORG_INPUT_SELECTOR = "#orgName";
   const SEARCH_BUTTON_SELECTOR = "#searchButton";
-  const ENHANCEMENT_VERSION = "20260702-ui3";
+  const ENHANCEMENT_VERSION = "20260702-ui4";
   let amountSortApplying = false;
 
   function readHistory() {
@@ -192,6 +192,7 @@
         list.insertBefore(chip, input);
       });
       composer.classList.toggle("is-empty", state.keywords.length === 0);
+      input.placeholder = state.keywords.length === 0 ? "輸入關鍵字後按 Enter" : "新增";
       clearButton.disabled = state.keywords.length === 0;
     }
 
