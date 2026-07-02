@@ -3,13 +3,14 @@
   const HISTORY_LIMIT = 300;
   const RESULT_ROWS_SELECTOR = "#resultRows";
   const LINK_CELL_SELECTOR = 'td[data-label="連結"]';
+  const TITLE_LINK_SELECTOR = 'td[data-label="標案名稱"] a[href]';
   const AGENCY_CELL_SELECTOR = 'td[data-label="機關"]';
   const BUDGET_CELL_SELECTOR = 'td[data-label="標案金額"]';
   const KEYWORDS_SELECTOR = "#keywords";
   const RESULT_META_SELECTOR = "#resultMeta";
   const ORG_INPUT_SELECTOR = "#orgName";
   const SEARCH_BUTTON_SELECTOR = "#searchButton";
-  const ENHANCEMENT_VERSION = "20260614-2";
+  const ENHANCEMENT_VERSION = "20260702-ui1";
   let amountSortApplying = false;
 
   function readHistory() {
@@ -36,7 +37,7 @@
       url: sourceLink.href,
       agency: textFrom(row, AGENCY_CELL_SELECTOR),
       announceDate: textFrom(row, 'td[data-label="公告日"]'),
-      deadline: textFrom(row, 'td[data-label="截止"]'),
+      deadline: textFrom(row, 'td[data-label="截止日期"]'),
       budget: textFrom(row, BUDGET_CELL_SELECTOR),
       tenderMeta: textFrom(row, ".tender-id"),
       viewedAt: new Date().toISOString()
@@ -96,13 +97,13 @@
     const row = link.closest("tr");
     if (!row) return;
 
-    const sourceLink = row.querySelector(`${LINK_CELL_SELECTOR} a[href]`) || link;
+    const sourceLink = row.querySelector(`${LINK_CELL_SELECTOR} a[href]`) || row.querySelector(TITLE_LINK_SELECTOR) || link;
     saveTenderRecord(collectTenderRecord(row, sourceLink, link.textContent.trim()));
     setTenderViewedState(row, true);
   }
 
   function handleTenderActivation(event) {
-    const link = event.target.closest?.(".tender-title-link");
+    const link = event.target.closest?.(".tender-title-link, a.tender-title");
     if (!link) return;
     if (event.type === "keydown" && event.key !== "Enter" && event.key !== " ") return;
     rememberTenderFromLink(link);
@@ -390,7 +391,7 @@
     const viewedIds = readViewedIds();
 
     rows.forEach((row) => {
-      const sourceLink = row.querySelector(`${LINK_CELL_SELECTOR} a[href]`);
+      const sourceLink = row.querySelector(`${LINK_CELL_SELECTOR} a[href]`) || row.querySelector(TITLE_LINK_SELECTOR);
       const title = row.querySelector(".tender-title");
       const linkCell = row.querySelector(LINK_CELL_SELECTOR);
       const agencyCell = row.querySelector(AGENCY_CELL_SELECTOR);
@@ -405,7 +406,7 @@
       const titleText = title.textContent.trim();
       titleLink.className = `${title.className} tender-title-link`.trim();
       const tenderRecord = collectTenderRecord(row, sourceLink, titleText);
-      titleLink.href = buildViewUrl(tenderRecord);
+      titleLink.href = sourceLink.href;
       titleLink.target = "_blank";
       titleLink.rel = "noreferrer";
       titleLink.title = "開啟標案頁面";
@@ -446,7 +447,7 @@
         }
       }
 
-      setTenderViewedState(row, viewedIds.has(sourceLink.href));
+      setTenderViewedState(row, viewedIds.has(sourceLink.href) || viewedIds.has(titleLink.href));
       row.classList.add("is-title-linked");
     });
   }
