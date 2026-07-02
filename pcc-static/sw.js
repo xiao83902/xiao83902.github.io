@@ -1,4 +1,4 @@
-const ASSET_VERSION = "20260702-ui5";
+const ASSET_VERSION = "20260702-ui6";
 const CACHE_NAME = `pcc-tender-${ASSET_VERSION}`;
 const APP_SHELL = [
   "/pcc/",
@@ -8,9 +8,9 @@ const APP_SHELL = [
   "/pcc/settings.html",
   "/pcc/styles.css",
   `/pcc/pcc-overrides.css?v=${ASSET_VERSION}`,
-  "/pcc/app.js",
-  "/pcc/reminders.js",
-  "/pcc/settings.js",
+  `/pcc/app.js?v=${ASSET_VERSION}`,
+  `/pcc/reminders.js?v=${ASSET_VERSION}`,
+  `/pcc/settings.js?v=${ASSET_VERSION}`,
   `/pcc/pcc-enhancements.js?v=${ASSET_VERSION}`,
   `/pcc/pcc-history.js?v=${ASSET_VERSION}`,
   `/pcc/pcc-view.js?v=${ASSET_VERSION}`,

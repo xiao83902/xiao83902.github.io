@@ -1,6 +1,6 @@
 const TARGET_ORIGIN = "http://pcc.nas220.i234.me";
 const PUBLIC_BASE = "/pcc";
-const ASSET_VERSION = "20260702-ui5";
+const ASSET_VERSION = "20260702-ui6";
 const PWA_HEAD = `
     <meta name="theme-color" content="#0f766e">
     <meta name="mobile-web-app-capable" content="yes">
@@ -88,9 +88,9 @@ function rewriteText(text, contentType) {
       .replaceAll('href="/"', `href="${PUBLIC_BASE}/"`)
       .replaceAll('href="/reminders.html"', `href="${PUBLIC_BASE}/reminders.html"`)
       .replaceAll('href="/settings.html"', `href="${PUBLIC_BASE}/settings.html"`)
-      .replaceAll('src="/app.js"', `src="${PUBLIC_BASE}/app.js"`)
-      .replaceAll('src="/reminders.js"', `src="${PUBLIC_BASE}/reminders.js"`)
-      .replaceAll('src="/settings.js"', `src="${PUBLIC_BASE}/settings.js"`)
+      .replaceAll('src="/app.js"', `src="${PUBLIC_BASE}/app.js?v=${ASSET_VERSION}"`)
+      .replaceAll('src="/reminders.js"', `src="${PUBLIC_BASE}/reminders.js?v=${ASSET_VERSION}"`)
+      .replaceAll('src="/settings.js"', `src="${PUBLIC_BASE}/settings.js?v=${ASSET_VERSION}"`)
       .replace("</nav>", `          <a class="nav-link" href="${PUBLIC_BASE}/history.html">閱覽記錄</a>\n        </nav>`);
     return rewritten
       .replace("</head>", `${PWA_HEAD}\n  </head>`)
