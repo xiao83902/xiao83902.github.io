@@ -10,7 +10,7 @@
   const RESULT_META_SELECTOR = "#resultMeta";
   const ORG_INPUT_SELECTOR = "#orgName";
   const SEARCH_BUTTON_SELECTOR = "#searchButton";
-  const ENHANCEMENT_VERSION = "20260702-ui1";
+  const ENHANCEMENT_VERSION = "20260702-ui2";
   let amountSortApplying = false;
 
   function readHistory() {
@@ -145,8 +145,9 @@
     const composer = document.createElement("div");
     composer.className = "keyword-composer";
     composer.innerHTML = `
-      <div class="keyword-chip-list" aria-label="目前關鍵字"></div>
-      <input class="keyword-chip-input" type="text" autocomplete="off" placeholder="輸入關鍵字後按 Enter">
+      <div class="keyword-chip-list" aria-label="目前關鍵字">
+        <input class="keyword-chip-input" type="text" autocomplete="off" placeholder="輸入關鍵字後按 Enter">
+      </div>
       <button class="keyword-clear-button" type="button">清空</button>
     `;
 
@@ -174,7 +175,7 @@
     }
 
     function render() {
-      list.innerHTML = "";
+      list.querySelectorAll(".keyword-chip").forEach((chip) => chip.remove());
       state.keywords.forEach((keyword) => {
         const chip = document.createElement("span");
         chip.className = "keyword-chip";
@@ -188,7 +189,7 @@
           render();
           input.focus();
         });
-        list.append(chip);
+        list.insertBefore(chip, input);
       });
       composer.classList.toggle("is-empty", state.keywords.length === 0);
       clearButton.disabled = state.keywords.length === 0;

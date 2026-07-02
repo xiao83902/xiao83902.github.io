@@ -26,14 +26,14 @@
 
 .keyword-composer {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 8px;
+  grid-template-columns: minmax(0, 1fr) 88px;
+  gap: 10px;
   align-items: start;
-  min-height: 118px;
+  min-height: 64px;
   border: 1px solid var(--pcc-line);
   border-radius: var(--pcc-radius);
   background: #ffffff;
-  padding: 10px;
+  padding: 10px 12px;
   transition: border-color 0.16s ease, box-shadow 0.16s ease;
 }
 
@@ -43,10 +43,14 @@
 }
 
 .keyword-chip-list {
+  grid-column: 1 / 2;
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
+  gap: 8px;
+  align-content: flex-start;
+  align-items: center;
   min-width: 0;
+  min-height: 42px;
 }
 
 .keyword-chip {
@@ -84,12 +88,16 @@
 }
 
 .keyword-chip-input {
-  grid-column: 1 / 2;
+  flex: 1 1 220px;
+  width: auto;
   min-width: min(220px, 100%);
   border: 0;
   border-radius: 0;
-  padding: 8px 2px;
+  min-height: 42px;
+  height: 42px;
+  padding: 8px 2px 9px;
   box-shadow: none;
+  line-height: 1.35;
 }
 
 .keyword-chip-input:focus {
@@ -99,13 +107,24 @@
 
 .keyword-clear-button {
   grid-column: 2 / 3;
-  grid-row: 1 / span 2;
-  min-height: 36px;
+  width: 100%;
+  min-height: 42px;
+  height: 42px;
   border: 1px solid #e4c6a8;
   background: #fff7ed;
   color: var(--pcc-amber);
   box-shadow: none;
   padding-inline: 12px;
+  align-self: start;
+  justify-self: stretch;
+}
+
+.keyword-composer.is-empty .keyword-chip-list {
+  align-content: center;
+}
+
+.keyword-composer.is-empty .keyword-chip-input {
+  flex-basis: 100%;
 }
 
 .keyword-clear-button:hover {
@@ -355,7 +374,11 @@ tbody tr.is-viewed-tender .agency-search-link {
 @media (max-width: 720px) {
   .keyword-composer {
     grid-template-columns: 1fr;
-    min-height: 124px;
+    min-height: 0;
+  }
+
+  .keyword-chip-list {
+    grid-column: 1;
   }
 
   .keyword-clear-button {
