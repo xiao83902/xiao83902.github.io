@@ -14,6 +14,43 @@
   --pcc-shadow-soft: 0 8px 24px rgba(16, 35, 31, 0.07);
 }
 
+.brand-block.has-brand-logo {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo-link {
+  display: block;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.brand-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand-copy {
+  min-width: 0;
+}
+
+.view-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.view-brand-row .brand-logo-link {
+  width: 52px;
+  height: 52px;
+}
+
 .keyword-native-textarea {
   position: absolute;
   width: 1px;
@@ -372,6 +409,16 @@ tbody tr.is-viewed-tender .agency-search-link {
 }
 
 @media (max-width: 720px) {
+  .brand-block.has-brand-logo {
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .brand-logo-link {
+    width: 52px;
+    height: 52px;
+  }
+
   .keyword-composer {
     grid-template-columns: 1fr;
     min-height: 0;

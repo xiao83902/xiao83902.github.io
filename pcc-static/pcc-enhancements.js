@@ -10,8 +10,39 @@
   const RESULT_META_SELECTOR = "#resultMeta";
   const ORG_INPUT_SELECTOR = "#orgName";
   const SEARCH_BUTTON_SELECTOR = "#searchButton";
-  const ENHANCEMENT_VERSION = "20260702-ui6";
+  const ENHANCEMENT_VERSION = "20260808-brand1";
   let amountSortApplying = false;
+
+  function enhanceBrandHeader() {
+    const brand = document.querySelector(".topbar .brand-block") || document.querySelector(".topbar > :first-child");
+    if (!brand) return;
+
+    brand.classList.add("brand-block", "has-brand-logo");
+    const existingLogo = brand.querySelector(".brand-logo-link");
+    if (existingLogo) {
+      const image = existingLogo.querySelector("img");
+      if (image) image.src = `/pcc/icon-192.png?v=${ENHANCEMENT_VERSION}`;
+      return;
+    }
+
+    const copy = document.createElement("div");
+    copy.className = "brand-copy";
+    while (brand.firstChild) copy.append(brand.firstChild);
+
+    const link = document.createElement("a");
+    link.className = "brand-logo-link";
+    link.href = "/pcc/";
+    link.setAttribute("aria-label", "工程標案搜尋首頁");
+
+    const image = document.createElement("img");
+    image.className = "brand-logo";
+    image.src = `/pcc/icon-192.png?v=${ENHANCEMENT_VERSION}`;
+    image.width = 64;
+    image.height = 64;
+    image.alt = "PCC";
+    link.append(image);
+    brand.append(link, copy);
+  }
 
   function readHistory() {
     try {
@@ -456,6 +487,7 @@
 
   function boot() {
     document.documentElement.dataset.pccEnhancements = ENHANCEMENT_VERSION;
+    enhanceBrandHeader();
     enhanceKeywordInput();
     enhanceResultKeywordSummary();
     enhanceAmountSort();
