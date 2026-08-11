@@ -1,6 +1,7 @@
 const TARGET_ORIGIN = "http://pcc.nas220.i234.me";
 const PUBLIC_BASE = "/pcc";
 const ASSET_VERSION = "20260808-brand1";
+const CDN_CACHE_CONTROL = "max-age=300, stale-while-revalidate=86400";
 const PWA_HEAD = `
     <meta name="theme-color" content="#0f766e">
     <meta name="mobile-web-app-capable" content="yes">
@@ -71,6 +72,12 @@ function setResponseHeaders(res, headers, contentType) {
   }
 }
 
+function setStaticCacheHeaders(req, res, status) {
+  if ((req.method !== "GET" && req.method !== "HEAD") || status !== 200) return;
+  res.setHeader("CDN-Cache-Control", CDN_CACHE_CONTROL);
+  res.setHeader("Vercel-Cache-Tag", "pcc-static");
+}
+
 async function readRequestBody(req) {
   if (req.method === "GET" || req.method === "HEAD") return undefined;
 
@@ -109,14 +116,18 @@ function rewriteText(text, contentType) {
 module.exports = async function handler(req, res) {
   try {
     const target = buildTargetUrl(req.url);
+    const originStartedAt = performance.now();
     const upstream = await fetch(target, {
       method: req.method,
       headers: proxyHeaders(req.headers),
       body: await readRequestBody(req)
     });
+    const originDuration = performance.now() - originStartedAt;
 
     const contentType = upstream.headers.get("content-type") || "";
     res.statusCode = upstream.status;
+    res.setHeader("Server-Timing", `pcc-origin;dur=${originDuration.toFixed(1)}`);
+    setStaticCacheHeaders(req, res, upstream.status);
 
     if (contentType.includes("text/html") || contentType.includes("javascript")) {
       setResponseHeaders(res, upstream.headers, contentType);

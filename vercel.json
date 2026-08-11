@@ -1,5 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "regions": ["hkg1"],
+  "functions": {
+    "api/pcc-proxy.js": {
+      "regions": ["hkg1"],
+      "maxDuration": 10
+    }
+  },
   "headers": [
     {
       "source": "/pcc/sw.js",
