@@ -127,11 +127,11 @@
     },
     {
       "source": "/pcc/api/:path*",
-      "destination": "http://pcc.nas220.i234.me/api/:path*"
+      "destination": "/api/pcc-proxy?path=/api/:path*"
     },
     {
       "source": "/pcc/healthz",
-      "destination": "http://pcc.nas220.i234.me/healthz"
+      "destination": "/api/pcc-proxy?path=/healthz"
     },
     {
       "source": "/pcc/",

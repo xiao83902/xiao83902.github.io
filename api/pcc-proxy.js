@@ -72,8 +72,9 @@ function setResponseHeaders(res, headers, contentType) {
   }
 }
 
-function setStaticCacheHeaders(req, res, status) {
-  if ((req.method !== "GET" && req.method !== "HEAD") || status !== 200) return;
+function setStaticCacheHeaders(req, res, status, target) {
+  const isDynamic = target.pathname.startsWith("/api/") || target.pathname === "/healthz";
+  if (isDynamic || (req.method !== "GET" && req.method !== "HEAD") || status !== 200) return;
   res.setHeader("CDN-Cache-Control", CDN_CACHE_CONTROL);
   res.setHeader("Vercel-Cache-Tag", "pcc-static");
 }
@@ -127,7 +128,7 @@ module.exports = async function handler(req, res) {
     const contentType = upstream.headers.get("content-type") || "";
     res.statusCode = upstream.status;
     res.setHeader("Server-Timing", `pcc-origin;dur=${originDuration.toFixed(1)}`);
-    setStaticCacheHeaders(req, res, upstream.status);
+    setStaticCacheHeaders(req, res, upstream.status, target);
 
     if (contentType.includes("text/html") || contentType.includes("javascript")) {
       setResponseHeaders(res, upstream.headers, contentType);
