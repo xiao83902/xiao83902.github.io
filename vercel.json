@@ -67,6 +67,11 @@
       "permanent": false
     },
     {
+      "source": "/1Credit/",
+      "destination": "/1credit/",
+      "permanent": false
+    },
+    {
       "source": "/1Credit/:path*",
       "destination": "/1credit/:path*",
       "permanent": false
