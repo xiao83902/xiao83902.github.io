@@ -10,7 +10,7 @@
   const RESULT_META_SELECTOR = "#resultMeta";
   const ORG_INPUT_SELECTOR = "#orgName";
   const SEARCH_BUTTON_SELECTOR = "#searchButton";
-  const ENHANCEMENT_VERSION = "20260808-brand1";
+  const ENHANCEMENT_VERSION = "20260827-search1";
   let amountSortApplying = false;
 
   function enhanceBrandHeader() {

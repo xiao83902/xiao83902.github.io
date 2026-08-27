@@ -1,6 +1,6 @@
 const TARGET_ORIGIN = "http://pcc.nas220.i234.me";
 const PUBLIC_BASE = "/pcc";
-const ASSET_VERSION = "20260808-brand1";
+const ASSET_VERSION = "20260827-search1";
 const CDN_CACHE_CONTROL = "max-age=300, stale-while-revalidate=86400";
 const PWA_HEAD = `
     <meta name="theme-color" content="#0f766e">

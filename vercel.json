@@ -4,7 +4,7 @@
   "functions": {
     "api/pcc-proxy.js": {
       "regions": ["hkg1"],
-      "maxDuration": 10
+      "maxDuration": 60
     }
   },
   "headers": [
